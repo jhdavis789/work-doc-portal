@@ -222,6 +222,7 @@ ul.meth{font-size:13px;color:#3a4a58;margin:6px 0;padding-left:18px}ul.meth li{m
       <li><b>The intercept is large and significant (~+11–13%/yr)</b>: these factors explain gold's volatility and comovement but not its 2003–2026 secular drift, which lives in α. A returns-factor model is a risk/hedging lens here, not a return attribution that closes.</li>
       <li><b>Explanatory, not forecastable</b> (Predictive tab): lagging the factors one period collapses R² to near zero and the genuine OOS forecast R² goes ≤0 at weekly/monthly/quarterly. A few lagged factors (e.g. S&P 500) are individually significant in-sample but that does not survive out-of-sample — gold prices the macro factors within the period. Gold's own AR(1) momentum is insignificant.</li>
       <li><b>Diagnostics motivate HAC</b>: Breusch–Pagan rejects homoskedasticity at daily/weekly, Ljung–Box finds residual autocorrelation at daily/monthly, Jarque–Bera rejects normality (fat tails), and the design condition number (~2,000–3,500) confirms the real-rate/AGG collinearity — all of which the Newey-West HAC SEs are robust to.</li>
+      <li><b>Non-linearity tested, rejected for forecasting</b> (<code>build_nonlinear.py</code>): adding directional-convexity (Δf·|Δf|), symmetric (Δf²), or down-move-asymmetry terms is significant <i>in-sample</i> (a 2× move looks more than 2× impactful) but <b>worsens OOS R² at every frequency</b> (daily −0.04, monthly −2.4) — it overfits and does not generalize. Only MOVE (monthly) shows same-sign convexity that survives significance, ≈ multiple-testing noise. The exploitable response is linear.</li>
       <li><b>Quarterly</b> rolling windows have thin DoF (20 obs, 8 regressors) — betas are noisy; weight the daily/weekly/monthly evidence.</li>
     </ul>
   </div>
@@ -280,8 +281,11 @@ function corr(a,b){ const n=a.length; let ma=0,mb=0; for(let i=0;i<n;i++){ma+=a[
 function sd(a){ const n=a.length; let m=0; for(const v of a)m+=v; m/=n; let s=0; for(const v of a)s+=(v-m)**2; return Math.sqrt(s/(n-1)); }
 function buildVarStrip(){ const fq=FC.freqs[FREQ];
   const pre=document.getElementById('varPresets'); pre.innerHTML='';
-  [['All 8',IDS.slice()],['Best 3 (OOS)',fq.best3.ids],['Best 4 (OOS)',fq.best4.ids],['real10 + dxy',['real10','dxy']]].forEach(([nm,ids])=>{
-    const b=document.createElement('button'); b.textContent=nm; b.className='presetbtn';
+  [['All 8','all 8 factors',IDS.slice()],
+   ['Best 3','top 3-factor set by out-of-sample skill (DM-validated)',fq.best3.ids],
+   ['Best 4','top 4-factor set by out-of-sample skill (DM-validated)',fq.best4.ids],
+   ['real10 + dxy','the universal core (real 10y yield + dollar)',['real10','dxy']]].forEach(([nm,tip,ids])=>{
+    const b=document.createElement('button'); b.textContent=nm; b.className='presetbtn'; b.title=tip;
     b.onclick=()=>{ IDS.forEach(i=>selOn[i]=ids.includes(i)); render(); }; pre.appendChild(b); });
   const tg=document.getElementById('varToggles'); tg.innerHTML='';
   IDS.forEach(i=>{ const l=document.createElement('label');
