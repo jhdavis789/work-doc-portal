@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Gold Factor-Regression Model \u2014 returns-space, rolling 60-month, OOS vs random walk",
+    "url": "gold-factor-regression/dashboard.html",
+    "date": "2026-06-23",
+    "kind": "Dashboard",
+    "pinned": true,
+    "desc": "Gold (LBMA) log-returns regressed on macro factor changes (DXY, 10Y TIPS real, 10Y breakeven, WTI, VIX, MOVE, S&P, US Agg bonds). Two pages: In-sample and Out-of-sample (estimate beta on trailing 60 months -> apply to next period's macros). Interactive variable selection auto-extends history (full model 2003 TIPS wall; drop TIPS -> 1990/1986). Best-subset presets, Diebold-Mariano vs random walk (beats RW daily/weekly/monthly), walk-forward selection, residual diagnostics. Live interactive dashboard (self-contained).",
+    "tags": [
+      "gold",
+      "macro",
+      "regression",
+      "GOLDBTC",
+      "forecasting"
+    ]
+  }
+]
