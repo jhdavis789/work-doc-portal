@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build.py — emit the self-contained "Work doc list" index page from entries.json.
+build.py — emit the self-contained "Work Doc Portal" index page from entries.json.
 
 A running index of links/deliverables to review and send (newest at top), with search,
 date sorting, kind/tag filters, and copy-link buttons. Add a deliverable by appending an
@@ -34,7 +34,7 @@ def add(args):
 TEMPLATE = r"""<!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Work doc list</title>
+<title>Work Doc Portal</title>
 <script type="application/json" id="data">__DATA__</script>
 <style>
 :root{--navy:#00294b;--blue:#005f9e;--teal:#007e6c;--mag:#a6256e;--amber:#c8801f;
@@ -71,7 +71,7 @@ mark{background:#ffe8a3;padding:0 1px}
 </style></head>
 <body>
 <header>
-<h1>Work doc list</h1>
+<h1>Work Doc Portal</h1>
 <p>Running index of deliverables &amp; links — newest at top. Search, filter by kind/tag, sort by date. Click a title to open; "Copy link" to grab the path. (Reviewed by JAOD; not auto-emailed.)</p>
 </header>
 <div class="bar">
