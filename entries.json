@@ -28,5 +28,37 @@
       "forecasting"
     ],
     "pinned": false
+  },
+  {
+    "title": "BTC ETF ownership \u2014 long-only ownership ranking (graph 1 of 2)",
+    "url": "btc-etf-ownership/graph1_long_only.html",
+    "date": "2026-06-24",
+    "kind": "Graph",
+    "desc": "Interactive horizontal-bar ranking of long-only ownership as a % of shares outstanding for the 3 big spot-BTC ETFs (IBIT/FBTC/GBTC) vs 20 S&P 500 mid-caps and 10 small-caps, from SEC Form 13F bulk data (period 2026-03-31). Headline: BTC ETFs ~9% long-only vs ~65% for ordinary stocks. Hover shows the all-institutional figure.",
+    "tags": [
+      "bitcoin",
+      "ETF",
+      "13F",
+      "ownership",
+      "SEC",
+      "long-only"
+    ],
+    "pinned": false
+  },
+  {
+    "title": "BTC ETF ownership \u2014 institutional base composition (graph 2 of 2)",
+    "url": "btc-etf-ownership/graph2_composition.html",
+    "date": "2026-06-24",
+    "kind": "Graph",
+    "desc": "Interactive stacked-bar composition of the 13F institutional base by investor type (passive index / active long-only / pension-insurance-wealth / hedge fund / market maker / bank-broker-dealer), % of shares outstanding. Shows BTC ETFs' thin, hedge-fund/basis-trade-skewed base (IBIT hedge funds ~= all long-only) vs passive+active-dominated stocks; GBTC the long-only exception.",
+    "tags": [
+      "bitcoin",
+      "ETF",
+      "13F",
+      "ownership",
+      "hedge-fund",
+      "basis-trade"
+    ],
+    "pinned": false
   }
 ]
