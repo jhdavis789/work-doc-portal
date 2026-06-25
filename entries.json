@@ -15,11 +15,11 @@
     ]
   },
   {
-    "title": "Gold Factor Model \u2014 Excel [v11] (formula-driven + Bloomberg BDH)",
+    "title": "Gold Factor Model \u2014 Excel [v12] (formula-driven + Bloomberg BDH)",
     "url": "gold-factor-regression/gold_factor_model.xlsx",
     "date": "2026-06-24",
     "kind": "Excel",
-    "desc": "Monthly gold factor regression in Excel: live LINEST betas/R2/t-stats + a forecast calculator (enter next-period factor changes to get implied gold return). Two sheets - data-embedded (offline) and Bloomberg BDH (live via add-in) - plus a Readme with tickers and expected betas. Companion to the interactive dashboard.",
+    "desc": "Generic daily factor-regression template: paste a Date column, a dependent series (Y), and up to 9 explanatory series; set each column transform (log return / \u0394level) and a Monthly/Weekly/Quarterly toggle. Live LINEST static regression + 5y rolling walk-forward OOS + charts, plus a Diagnostics tab that self-checks the paste. Robust period key (no array constants). Tested vs numpy across all 3 frequencies.",
     "tags": [
       "gold",
       "excel",
