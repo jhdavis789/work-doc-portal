@@ -24,6 +24,7 @@ def add(args):
     items.append({
         "title": args.title, "url": args.url, "date": args.date,
         "kind": args.kind or "Doc", "desc": args.desc or "",
+        "version": args.version or "",
         "tags": [t.strip() for t in (args.tags or "").split(",") if t.strip()],
         "pinned": bool(args.pinned),
     })
@@ -60,6 +61,7 @@ header p{margin:6px 0 0;font-size:13px;color:#c9dcec;max-width:820px}
 .ti a{color:var(--navy);font-weight:650;font-size:16px;text-decoration:none}
 .ti a:hover{text-decoration:underline}
 .kind{display:inline-block;font-size:11px;color:#fff;background:var(--blue);border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:middle}
+.ver{display:inline-block;font-size:11px;color:#fff;background:var(--amber);border-radius:5px;padding:2px 7px;margin-left:6px;vertical-align:middle;font-variant-numeric:tabular-nums;letter-spacing:.3px}
 .desc{color:#3a4a58;font-size:13px;margin:6px 0 8px}
 .tags{display:flex;gap:6px;flex-wrap:wrap}
 .tag{font-size:11.5px;color:var(--mut);background:#eef2f5;border-radius:10px;padding:2px 9px}
@@ -116,7 +118,7 @@ function render(){
     const tags=(d.tags||[]).map(t=>`<span class="tag">${hl(t,q)}</span>`).join('');
     return `<div class="item${d.pinned?' pin':''}">
       <div class="date">${esc(d.date)||'—'}${d.pinned?'<br><span class="pinlbl">PINNED</span>':''}</div>
-      <div><div class="ti"><a href="${esc(d.url)}" target="_blank" rel="noopener">${hl(d.title,q)}</a>${d.kind?`<span class="kind">${esc(d.kind)}</span>`:''}</div>
+      <div><div class="ti"><a href="${esc(d.url)}" target="_blank" rel="noopener">${hl(d.title,q)}</a>${d.kind?`<span class="kind">${esc(d.kind)}</span>`:''}${d.version?`<span class="ver">${esc(d.version)}</span>`:''}</div>
         <div class="desc">${hl(d.desc||'',q)}</div><div class="tags">${tags}</div></div>
       <div class="actions"><a href="${esc(d.url)}" target="_blank" rel="noopener">Open ↗</a>
         <button onclick="copy('${esc(d.url)}')">Copy link</button></div>
@@ -141,7 +143,7 @@ def main():
     a = sub.add_parser("add")
     a.add_argument("--title", required=True); a.add_argument("--url", required=True)
     a.add_argument("--date", required=True); a.add_argument("--kind")
-    a.add_argument("--desc"); a.add_argument("--tags"); a.add_argument("--pinned", action="store_true")
+    a.add_argument("--desc"); a.add_argument("--tags"); a.add_argument("--version"); a.add_argument("--pinned", action="store_true")
     args = ap.parse_args()
     if args.cmd == "add":
         add(args)
