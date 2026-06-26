@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Who owns the BTC ETFs? Institutional base composition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Who owns it? Institutional base composition</title>
 <script src="chart.umd.min.js"></script>
 <style>
-:root{--navy:#00294b;--blue:#005f9e;--teal:#007e6c;--mag:#a6256e;--mut:#5b6b7a;--line:#e3e8ed;--bg:#f4f6f8;}
+:root{--navy:#00294b;--blue:#005f9e;--mut:#5b6b7a;--line:#e3e8ed;--bg:#f4f6f8;}
 *{box-sizing:border-box}
 body{margin:0;font:14.5px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--navy);background:var(--bg)}
 header{background:linear-gradient(100deg,var(--navy),#003f6e);color:#fff;padding:20px 26px}
-header h1{margin:0;font-size:20px;font-weight:650}
-header p{margin:6px 0 0;font-size:13px;color:#c9dcec;max-width:900px}
+header h1{margin:0;font-size:20px;font-weight:650} header p{margin:6px 0 0;font-size:13px;color:#c9dcec;max-width:920px}
 .wrap{max-width:1000px;margin:0 auto;padding:20px 24px 40px}
 .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px}
-.cwrap{position:relative;height:560px}
-.foot{color:var(--mut);font-size:12px;margin-top:14px;line-height:1.5}
-.foot a{color:var(--blue)}
+.cwrap{position:relative;height:520px}
+.foot{color:var(--mut);font-size:12px;margin-top:14px;line-height:1.55} .foot a{color:var(--blue)}
 .nav{font-size:12.5px;margin-top:10px} .nav a{color:var(--blue);text-decoration:none}
 </style></head><body>
-<header><h1>Who owns the BTC ETFs? Institutional base composition</h1><p>13F long shares by investor type, as a % of shares outstanding (period 2026-03-31). BTC ETFs vs equity-group means.</p></header>
+<header><h1>Who owns it? Institutional base composition</h1><p>13F long shares by investor type, % of shares outstanding (period 2026-03-31).</p></header>
 <div class="wrap"><div class="card"><div class="cwrap"><canvas id="c"></canvas></div></div>
-<div class="foot"><b>The BTC-ETF institutional base is thin and trading-desk heavy.</b> In IBIT, hedge funds (<span style="color:#a6256e">magenta</span>) nearly equal all long-only holders combined — the cash-and-carry basis trade. GBTC is the exception: almost all active long-only, ~0 hedge funds. Ordinary stocks are dominated by passive + active long-only.<br>Source: SEC Form 13F-HR bulk data set (period 2026-03-31); shares outstanding from SEC XBRL. Long-only = passive index + active long-only + pension + insurance + wealth/RIA. Vanguard co-filing entities de-duplicated; institutional totals can exceed 100% of float on high-short-interest stocks (securities-lending double-count). Curated investor-type classifier. By JAOD &amp; (mainly) Claude.</div>
-<div class="nav"><a href="graph1_long_only.html">◀ Graph 1: long-only ranking</a> &nbsp;·&nbsp; <a href="graph2_composition.html">Graph 2: ownership composition ▶</a></div>
-</div>
+<div class="foot"><b>Bitcoin ETFs are trading-desk heavy; gold ETFs are clean real-money.</b> In IBIT, hedge funds (<span style="color:#a6256e">magenta</span>) ≈ all long-only combined — the basis trade. Gold ETFs carry almost no hedge funds (0.4%) and no market makers. Stocks are dominated by passive + active long-only.<br>Source: SEC Form 13F-HR bulk data set (period 2026-03-31); shares outstanding from SEC XBRL (BTC/gold ETFs + stocks exact as-of; equity-index ETFs ≈ current, mature/stable). Long-only = passive index + active long-only + pension + insurance + wealth/RIA. Vanguard co-filing entities de-duplicated. By JAOD &amp; (mainly) Claude.</div><div class="nav"><a href="graph1_long_only.html">◀ Graph 1: relative ranking</a> &nbsp;·&nbsp; <a href="graph3_allocation.html">Graph 3: L-fund allocation ▶</a></div></div>
 <script>
-const NAVY="#00294b",BLUE="#005f9e",TEAL="#007e6c",MAG="#a6256e",AMBER="#c8801f",GREY="#9aa7b1";
-Chart.defaults.font.family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif";
-Chart.defaults.color="#00294b";
+const NAVY="#00294b",BLUE="#005f9e",TEAL="#007e6c",MAG="#a6256e",AMBER="#c8801f",ORANGE="#e07b39",GREY="#9aa7b1";
+Chart.defaults.font.family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif";Chart.defaults.color="#00294b";
 
-const L=["BTC ETF mean", "IBIT", "FBTC", "GBTC", "S&P mid-cap mean", "Small-cap mean"];
-new Chart(document.getElementById('c'),{
- type:'bar',
- data:{labels:L,datasets:[{"label": "Passive / index", "data": [0.4, 1.0, 0.1, 0.0, 23.9, 30.8], "backgroundColor": "#005f9e", "borderWidth": 0}, {"label": "Active long-only", "data": [4.9, 2.8, 3.0, 8.8, 33.0, 27.1], "backgroundColor": "#007e6c", "borderWidth": 0}, {"label": "Pension / insurance / wealth", "data": [4.4, 4.6, 4.1, 4.4, 7.7, 6.7], "backgroundColor": "#c8801f", "borderWidth": 0}, {"label": "Hedge fund", "data": [4.0, 7.1, 4.6, 0.2, 5.8, 5.2], "backgroundColor": "#a6256e", "borderWidth": 0}, {"label": "Market maker", "data": [1.0, 1.1, 1.3, 0.5, 0.3, 0.9], "backgroundColor": "#e07b39", "borderWidth": 0}, {"label": "Bank / broker-dealer", "data": [2.2, 4.9, 1.4, 0.3, 19.0, 13.7], "backgroundColor": "#00294b", "borderWidth": 0}, {"label": "Strategic / unclassified", "data": [2.1, 2.4, 1.9, 2.1, 4.1, 3.4], "backgroundColor": "#9aa7b1", "borderWidth": 0}]},
+const valueLabels={id:'vl',afterDatasetsDraw(c,a,opts){const{ctx}=c;ctx.save();
+ ctx.font='11px -apple-system,Segoe UI,Arial';ctx.fillStyle='#243240';
+ c.data.datasets.forEach((ds,di)=>{const meta=c.getDatasetMeta(di);if(meta.hidden)return;
+  meta.data.forEach((el,i)=>{const v=ds.data[i];if(v==null)return;
+   const horiz=c.options.indexAxis==='y';
+   if(horiz){ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText((opts.fmt?opts.fmt(v):v),el.x+4,el.y);}
+   else{ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText((opts.fmt?opts.fmt(v):v),el.x,el.y-3);}});});
+ ctx.restore();}};
+
+
+new Chart(document.getElementById('c'),{type:'bar',
+ data:{labels:["Bitcoin ETF (mean)", "  IBIT", "  GBTC", "Gold ETF (mean)", "Equity-index ETF (mean)", "S&P mid-cap (mean)", "Small-cap (mean)"],datasets:[{"label": "Passive / index", "data": [0.4, 1.0, 0.0, 0.6, 4.2, 23.9, 30.8], "backgroundColor": "#005f9e", "borderWidth": 0}, {"label": "Active long-only", "data": [4.9, 2.8, 8.8, 9.6, 7.9, 33.0, 27.1], "backgroundColor": "#007e6c", "borderWidth": 0}, {"label": "Pension / insurance / wealth", "data": [4.4, 4.6, 4.4, 13.7, 15.7, 7.7, 6.7], "backgroundColor": "#c8801f", "borderWidth": 0}, {"label": "Hedge fund", "data": [4.0, 7.1, 0.2, 0.4, 3.2, 5.8, 5.2], "backgroundColor": "#a6256e", "borderWidth": 0}, {"label": "Market maker", "data": [1.0, 1.1, 0.5, 0.3, 2.7, 0.3, 0.9], "backgroundColor": "#e07b39", "borderWidth": 0}, {"label": "Bank / broker-dealer", "data": [2.2, 4.9, 0.3, 12.6, 27.9, 19.0, 13.7], "backgroundColor": "#00294b", "borderWidth": 0}, {"label": "Strategic / unclassified", "data": [2.1, 2.4, 2.1, 6.7, 6.6, 4.1, 3.4], "backgroundColor": "#9aa7b1", "borderWidth": 0}]},
  options:{indexAxis:'y',maintainAspectRatio:false,
-  plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11.5}}},
+  plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},
    tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.x+'%'}}},
   scales:{x:{stacked:true,title:{display:true,text:'Institutional ownership — % of shares outstanding'},grid:{color:'#e3e8ed'},ticks:{callback:v=>v+'%'}},
-          y:{stacked:true,grid:{display:false}}}}
-});
+          y:{stacked:true,grid:{display:false}}}}});
 
 </script></body></html>
