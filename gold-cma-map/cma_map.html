@@ -1,0 +1,605 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gold CMA — what drives the assumption</title>
+<style>
+:root{--ink:#26313d;--navy:#00294b;--rule:#dfe5ec;--soft:#f5f7fa;}
+*{box-sizing:border-box} html,body{margin:0;background:#eef1f5;color:var(--ink);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.wrap{max-width:1560px;margin:0 auto;padding:20px 18px 40px}
+header h1{font-size:21px;color:var(--navy);margin:0 0 3px;letter-spacing:-.01em}
+header p{margin:0 0 4px;color:#54616f;font-size:12.5px;max-width:1180px;line-height:1.5}
+.hint{color:#7c8893;font-size:11.5px;margin:6px 0 4px}
+.hint b{color:var(--navy)}
+.board{background:#fff;border:1px solid var(--rule);border-radius:12px;
+ box-shadow:0 2px 16px rgba(0,40,75,.07);padding:6px 8px;overflow-x:auto}
+svg{width:100%;height:auto;display:block;min-width:1300px}
+.colh{font-size:13px;font-weight:700;fill:var(--navy)}
+.colsub{font-size:10.5px;fill:#8a96a3}
+.edge{stroke-width:.8;opacity:.16;transition:opacity .12s,stroke-width .12s}
+.flab{font-size:11.6px;fill:#3a4654} .fdeg{display:none}
+.fdot{fill:#b8c2cd} .adot{stroke:#fff;stroke-width:1}
+.sbox{fill:#fbfcfe;stroke:#e0e6ed;stroke-width:1}
+.slab{font-size:10px;fill:#33404e} .slab.paper{font-style:italic;fill:#3a4654}
+.alab{font-size:12.4px;font-weight:700} .acount{font-size:9.6px;fill:#8a96a3}
+.blocklab{font-size:9px;font-weight:700;fill:#aab4bf;letter-spacing:.08em}
+.divider{stroke:#e6ebf1;stroke-width:1}
+.node{cursor:pointer} .hit{fill:transparent}
+/* interaction states */
+svg.has-sel .edge{opacity:.04}
+svg.has-sel .edge.lit{opacity:.92;stroke-width:1.7}
+svg.has-sel .slab,svg.has-sel .flab,svg.has-sel .alab,svg.has-sel .acount{opacity:.22}
+svg.has-sel .sbox,svg.has-sel .fdot,svg.has-sel .adot,svg.has-sel .stab{opacity:.22}
+svg.has-sel .lit .slab,svg.has-sel .lit .flab,svg.has-sel .lit .alab,svg.has-sel .lit .acount{opacity:1}
+svg.has-sel .lit .sbox,svg.has-sel .lit .fdot,svg.has-sel .lit .adot,svg.has-sel .lit .stab{opacity:1}
+svg.has-sel .lit .sbox{stroke:#9aa6b3;stroke-width:1.5}
+svg.has-sel .sel .sbox{stroke:var(--navy);stroke-width:2}
+svg.has-sel .sel .flab,svg.has-sel .sel .alab{font-weight:700}
+.foot{color:#8a96a3;font-size:10.5px;margin-top:12px;line-height:1.5}
+</style></head><body><div class="wrap">
+<header>
+<h1>What drives the gold CMA — papers &amp; shops, the factors they cite, the approaches they take</h1>
+<p>Center column is every major source from our gold-CMA literature review: academic papers on top, the industry shops (managers, banks, consultants) below. Lines to the <b>left</b> connect each source to the price factors it claims move gold; lines to the <b>right</b> connect it to its modeling approach. One source can cite many factors and use more than one approach.</p>
+<p class="hint">Hover any node to trace its links. Click to pin; click empty space to clear. Edge colour = the source's primary approach.</p>
+</header>
+<div class="board"><svg id="map" viewBox="-8 0 1748 1030" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<text x="286" y="46" text-anchor="end" class="colh">Price factors</text>
+<text x="760" y="46" text-anchor="middle" class="colh">Papers &amp; shops</text>
+<text x="1236" y="46" text-anchor="start" class="colh">Approach categories</text>
+<text x="286" y="64" text-anchor="end" class="colsub">what the work says moves gold · 20 elements</text>
+<text x="760" y="64" text-anchor="middle" class="colsub">19 academic · 17 industry</text>
+<text x="1236" y="64" text-anchor="start" class="colsub">7 MECE families</text>
+<g id="edges">
+<line id="e_P1_F1" data-src="P1" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="110.0" stroke="#005f9e" class="edge"/>
+<line id="e_P1_F2" data-src="P1" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="110.0" stroke="#005f9e" class="edge"/>
+<line id="e_P1_F19" data-src="P1" data-end="F19" x1="286.0" y1="959.2" x2="648.0" y2="110.0" stroke="#005f9e" class="edge"/>
+<line id="e_P1_A3" data-src="P1" data-end="A3" x1="872.0" y1="110.0" x2="1236.0" y2="426.7" stroke="#005f9e" class="edge"/>
+<line id="e_P2_F1" data-src="P2" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="134.4" stroke="#005f9e" class="edge"/>
+<line id="e_P2_F2" data-src="P2" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="134.4" stroke="#005f9e" class="edge"/>
+<line id="e_P2_F11" data-src="P2" data-end="F11" x1="286.0" y1="584.4" x2="648.0" y2="134.4" stroke="#005f9e" class="edge"/>
+<line id="e_P2_F19" data-src="P2" data-end="F19" x1="286.0" y1="959.2" x2="648.0" y2="134.4" stroke="#005f9e" class="edge"/>
+<line id="e_P2_A3" data-src="P2" data-end="A3" x1="872.0" y1="134.4" x2="1236.0" y2="426.7" stroke="#005f9e" class="edge"/>
+<line id="e_P3_F1" data-src="P3" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="158.8" stroke="#005f9e" class="edge"/>
+<line id="e_P3_F2" data-src="P3" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="158.8" stroke="#005f9e" class="edge"/>
+<line id="e_P3_F4" data-src="P3" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="158.8" stroke="#005f9e" class="edge"/>
+<line id="e_P3_F16" data-src="P3" data-end="F16" x1="286.0" y1="818.6" x2="648.0" y2="158.8" stroke="#005f9e" class="edge"/>
+<line id="e_P3_F19" data-src="P3" data-end="F19" x1="286.0" y1="959.2" x2="648.0" y2="158.8" stroke="#005f9e" class="edge"/>
+<line id="e_P3_A3" data-src="P3" data-end="A3" x1="872.0" y1="158.8" x2="1236.0" y2="426.7" stroke="#005f9e" class="edge"/>
+<line id="e_P3_A2" data-src="P3" data-end="A2" x1="872.0" y1="158.8" x2="1236.0" y2="294.3" stroke="#007e6c" class="edge"/>
+<line id="e_P4_F1" data-src="P4" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="183.2" stroke="#005f9e" class="edge"/>
+<line id="e_P4_F2" data-src="P4" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="183.2" stroke="#005f9e" class="edge"/>
+<line id="e_P4_F19" data-src="P4" data-end="F19" x1="286.0" y1="959.2" x2="648.0" y2="183.2" stroke="#005f9e" class="edge"/>
+<line id="e_P4_A3" data-src="P4" data-end="A3" x1="872.0" y1="183.2" x2="1236.0" y2="426.7" stroke="#005f9e" class="edge"/>
+<line id="e_P5_F4" data-src="P5" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="207.6" stroke="#007e6c" class="edge"/>
+<line id="e_P5_A2" data-src="P5" data-end="A2" x1="872.0" y1="207.6" x2="1236.0" y2="294.3" stroke="#007e6c" class="edge"/>
+<line id="e_P6_F4" data-src="P6" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="232.0" stroke="#007e6c" class="edge"/>
+<line id="e_P6_F5" data-src="P6" data-end="F5" x1="286.0" y1="303.4" x2="648.0" y2="232.0" stroke="#007e6c" class="edge"/>
+<line id="e_P6_A2" data-src="P6" data-end="A2" x1="872.0" y1="232.0" x2="1236.0" y2="294.3" stroke="#007e6c" class="edge"/>
+<line id="e_P7_F4" data-src="P7" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="256.4" stroke="#007e6c" class="edge"/>
+<line id="e_P7_F5" data-src="P7" data-end="F5" x1="286.0" y1="303.4" x2="648.0" y2="256.4" stroke="#007e6c" class="edge"/>
+<line id="e_P7_A2" data-src="P7" data-end="A2" x1="872.0" y1="256.4" x2="1236.0" y2="294.3" stroke="#007e6c" class="edge"/>
+<line id="e_P8_F6" data-src="P8" data-end="F6" x1="286.0" y1="350.2" x2="648.0" y2="280.8" stroke="#a6256e" class="edge"/>
+<line id="e_P8_F13" data-src="P8" data-end="F13" x1="286.0" y1="678.1" x2="648.0" y2="280.8" stroke="#a6256e" class="edge"/>
+<line id="e_P8_F14" data-src="P8" data-end="F14" x1="286.0" y1="724.9" x2="648.0" y2="280.8" stroke="#a6256e" class="edge"/>
+<line id="e_P8_A4" data-src="P8" data-end="A4" x1="872.0" y1="280.8" x2="1236.0" y2="559.0" stroke="#a6256e" class="edge"/>
+<line id="e_P9_F4" data-src="P9" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="305.2" stroke="#007e6c" class="edge"/>
+<line id="e_P9_F5" data-src="P9" data-end="F5" x1="286.0" y1="303.4" x2="648.0" y2="305.2" stroke="#007e6c" class="edge"/>
+<line id="e_P9_F6" data-src="P9" data-end="F6" x1="286.0" y1="350.2" x2="648.0" y2="305.2" stroke="#007e6c" class="edge"/>
+<line id="e_P9_F14" data-src="P9" data-end="F14" x1="286.0" y1="724.9" x2="648.0" y2="305.2" stroke="#007e6c" class="edge"/>
+<line id="e_P9_A2" data-src="P9" data-end="A2" x1="872.0" y1="305.2" x2="1236.0" y2="294.3" stroke="#007e6c" class="edge"/>
+<line id="e_P9_A4" data-src="P9" data-end="A4" x1="872.0" y1="305.2" x2="1236.0" y2="559.0" stroke="#a6256e" class="edge"/>
+<line id="e_P10_F2" data-src="P10" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="329.6" stroke="#5b3a8c" class="edge"/>
+<line id="e_P10_F7" data-src="P10" data-end="F7" x1="286.0" y1="397.1" x2="648.0" y2="329.6" stroke="#5b3a8c" class="edge"/>
+<line id="e_P10_F8" data-src="P10" data-end="F8" x1="286.0" y1="443.9" x2="648.0" y2="329.6" stroke="#5b3a8c" class="edge"/>
+<line id="e_P10_A6" data-src="P10" data-end="A6" x1="872.0" y1="329.6" x2="1236.0" y2="823.7" stroke="#5b3a8c" class="edge"/>
+<line id="e_P11_F7" data-src="P11" data-end="F7" x1="286.0" y1="397.1" x2="648.0" y2="354.0" stroke="#5b3a8c" class="edge"/>
+<line id="e_P11_F8" data-src="P11" data-end="F8" x1="286.0" y1="443.9" x2="648.0" y2="354.0" stroke="#5b3a8c" class="edge"/>
+<line id="e_P11_F9" data-src="P11" data-end="F9" x1="286.0" y1="490.7" x2="648.0" y2="354.0" stroke="#5b3a8c" class="edge"/>
+<line id="e_P11_A6" data-src="P11" data-end="A6" x1="872.0" y1="354.0" x2="1236.0" y2="823.7" stroke="#5b3a8c" class="edge"/>
+<line id="e_P12_F7" data-src="P12" data-end="F7" x1="286.0" y1="397.1" x2="648.0" y2="378.4" stroke="#5b3a8c" class="edge"/>
+<line id="e_P12_F8" data-src="P12" data-end="F8" x1="286.0" y1="443.9" x2="648.0" y2="378.4" stroke="#5b3a8c" class="edge"/>
+<line id="e_P12_F15" data-src="P12" data-end="F15" x1="286.0" y1="771.8" x2="648.0" y2="378.4" stroke="#5b3a8c" class="edge"/>
+<line id="e_P12_A6" data-src="P12" data-end="A6" x1="872.0" y1="378.4" x2="1236.0" y2="823.7" stroke="#5b3a8c" class="edge"/>
+<line id="e_P13_F7" data-src="P13" data-end="F7" x1="286.0" y1="397.1" x2="648.0" y2="402.8" stroke="#5b3a8c" class="edge"/>
+<line id="e_P13_F8" data-src="P13" data-end="F8" x1="286.0" y1="443.9" x2="648.0" y2="402.8" stroke="#5b3a8c" class="edge"/>
+<line id="e_P13_F9" data-src="P13" data-end="F9" x1="286.0" y1="490.7" x2="648.0" y2="402.8" stroke="#5b3a8c" class="edge"/>
+<line id="e_P13_A6" data-src="P13" data-end="A6" x1="872.0" y1="402.8" x2="1236.0" y2="823.7" stroke="#5b3a8c" class="edge"/>
+<line id="e_P14_F12" data-src="P14" data-end="F12" x1="286.0" y1="631.3" x2="648.0" y2="427.2" stroke="#3f7d5a" class="edge"/>
+<line id="e_P14_F13" data-src="P14" data-end="F13" x1="286.0" y1="678.1" x2="648.0" y2="427.2" stroke="#3f7d5a" class="edge"/>
+<line id="e_P14_F15" data-src="P14" data-end="F15" x1="286.0" y1="771.8" x2="648.0" y2="427.2" stroke="#3f7d5a" class="edge"/>
+<line id="e_P14_F18" data-src="P14" data-end="F18" x1="286.0" y1="912.3" x2="648.0" y2="427.2" stroke="#3f7d5a" class="edge"/>
+<line id="e_P14_A7" data-src="P14" data-end="A7" x1="872.0" y1="427.2" x2="1236.0" y2="956.0" stroke="#3f7d5a" class="edge"/>
+<line id="e_P15_F12" data-src="P15" data-end="F12" x1="286.0" y1="631.3" x2="648.0" y2="451.6" stroke="#3f7d5a" class="edge"/>
+<line id="e_P15_F15" data-src="P15" data-end="F15" x1="286.0" y1="771.8" x2="648.0" y2="451.6" stroke="#3f7d5a" class="edge"/>
+<line id="e_P15_F18" data-src="P15" data-end="F18" x1="286.0" y1="912.3" x2="648.0" y2="451.6" stroke="#3f7d5a" class="edge"/>
+<line id="e_P15_A7" data-src="P15" data-end="A7" x1="872.0" y1="451.6" x2="1236.0" y2="956.0" stroke="#3f7d5a" class="edge"/>
+<line id="e_P16_F7" data-src="P16" data-end="F7" x1="286.0" y1="397.1" x2="648.0" y2="476.0" stroke="#3f7d5a" class="edge"/>
+<line id="e_P16_F12" data-src="P16" data-end="F12" x1="286.0" y1="631.3" x2="648.0" y2="476.0" stroke="#3f7d5a" class="edge"/>
+<line id="e_P16_F13" data-src="P16" data-end="F13" x1="286.0" y1="678.1" x2="648.0" y2="476.0" stroke="#3f7d5a" class="edge"/>
+<line id="e_P16_F18" data-src="P16" data-end="F18" x1="286.0" y1="912.3" x2="648.0" y2="476.0" stroke="#3f7d5a" class="edge"/>
+<line id="e_P16_A7" data-src="P16" data-end="A7" x1="872.0" y1="476.0" x2="1236.0" y2="956.0" stroke="#3f7d5a" class="edge"/>
+<line id="e_P17_F2" data-src="P17" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="500.4" stroke="#9aa6b3" class="edge"/>
+<line id="e_P17_F9" data-src="P17" data-end="F9" x1="286.0" y1="490.7" x2="648.0" y2="500.4" stroke="#9aa6b3" class="edge"/>
+<line id="e_P17_F11" data-src="P17" data-end="F11" x1="286.0" y1="584.4" x2="648.0" y2="500.4" stroke="#9aa6b3" class="edge"/>
+<line id="e_P18_F2" data-src="P18" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="524.8" stroke="#005f9e" class="edge"/>
+<line id="e_P18_F9" data-src="P18" data-end="F9" x1="286.0" y1="490.7" x2="648.0" y2="524.8" stroke="#005f9e" class="edge"/>
+<line id="e_P18_F11" data-src="P18" data-end="F11" x1="286.0" y1="584.4" x2="648.0" y2="524.8" stroke="#005f9e" class="edge"/>
+<line id="e_P18_A3" data-src="P18" data-end="A3" x1="872.0" y1="524.8" x2="1236.0" y2="426.7" stroke="#005f9e" class="edge"/>
+<line id="e_P19_F16" data-src="P19" data-end="F16" x1="286.0" y1="818.6" x2="648.0" y2="549.2" stroke="#9aa6b3" class="edge"/>
+<line id="e_S2_F20" data-src="S2" data-end="F20" x1="286.0" y1="1006.0" x2="648.0" y2="599.6" stroke="#c8862a" class="edge"/>
+<line id="e_S2_F1" data-src="S2" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="599.6" stroke="#c8862a" class="edge"/>
+<line id="e_S2_F4" data-src="S2" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="599.6" stroke="#c8862a" class="edge"/>
+<line id="e_S2_A5" data-src="S2" data-end="A5" x1="872.0" y1="599.6" x2="1236.0" y2="691.3" stroke="#c8862a" class="edge"/>
+<line id="e_S2_A2" data-src="S2" data-end="A2" x1="872.0" y1="599.6" x2="1236.0" y2="294.3" stroke="#007e6c" class="edge"/>
+<line id="e_S3_F1" data-src="S3" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="624.0" stroke="#8a96a3" class="edge"/>
+<line id="e_S3_F10" data-src="S3" data-end="F10" x1="286.0" y1="537.6" x2="648.0" y2="624.0" stroke="#8a96a3" class="edge"/>
+<line id="e_S3_A1" data-src="S3" data-end="A1" x1="872.0" y1="624.0" x2="1236.0" y2="162.0" stroke="#8a96a3" class="edge"/>
+<line id="e_S4_F1" data-src="S4" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="648.4" stroke="#005f9e" class="edge"/>
+<line id="e_S4_F2" data-src="S4" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="648.4" stroke="#005f9e" class="edge"/>
+<line id="e_S4_F11" data-src="S4" data-end="F11" x1="286.0" y1="584.4" x2="648.0" y2="648.4" stroke="#005f9e" class="edge"/>
+<line id="e_S4_F19" data-src="S4" data-end="F19" x1="286.0" y1="959.2" x2="648.0" y2="648.4" stroke="#005f9e" class="edge"/>
+<line id="e_S4_A3" data-src="S4" data-end="A3" x1="872.0" y1="648.4" x2="1236.0" y2="426.7" stroke="#005f9e" class="edge"/>
+<line id="e_S5_F1" data-src="S5" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="672.8" stroke="#8a96a3" class="edge"/>
+<line id="e_S5_F4" data-src="S5" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="672.8" stroke="#8a96a3" class="edge"/>
+<line id="e_S5_A1" data-src="S5" data-end="A1" x1="872.0" y1="672.8" x2="1236.0" y2="162.0" stroke="#8a96a3" class="edge"/>
+<line id="e_S5_A3" data-src="S5" data-end="A3" x1="872.0" y1="672.8" x2="1236.0" y2="426.7" stroke="#005f9e" class="edge"/>
+<line id="e_S6_F19" data-src="S6" data-end="F19" x1="286.0" y1="959.2" x2="648.0" y2="697.2" stroke="#c8862a" class="edge"/>
+<line id="e_S6_F12" data-src="S6" data-end="F12" x1="286.0" y1="631.3" x2="648.0" y2="697.2" stroke="#c8862a" class="edge"/>
+<line id="e_S6_F18" data-src="S6" data-end="F18" x1="286.0" y1="912.3" x2="648.0" y2="697.2" stroke="#c8862a" class="edge"/>
+<line id="e_S6_A5" data-src="S6" data-end="A5" x1="872.0" y1="697.2" x2="1236.0" y2="691.3" stroke="#c8862a" class="edge"/>
+<line id="e_S7_F1" data-src="S7" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="721.6" stroke="#005f9e" class="edge"/>
+<line id="e_S7_F2" data-src="S7" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="721.6" stroke="#005f9e" class="edge"/>
+<line id="e_S7_F7" data-src="S7" data-end="F7" x1="286.0" y1="397.1" x2="648.0" y2="721.6" stroke="#005f9e" class="edge"/>
+<line id="e_S7_F19" data-src="S7" data-end="F19" x1="286.0" y1="959.2" x2="648.0" y2="721.6" stroke="#005f9e" class="edge"/>
+<line id="e_S7_A3" data-src="S7" data-end="A3" x1="872.0" y1="721.6" x2="1236.0" y2="426.7" stroke="#005f9e" class="edge"/>
+<line id="e_S7_A7" data-src="S7" data-end="A7" x1="872.0" y1="721.6" x2="1236.0" y2="956.0" stroke="#3f7d5a" class="edge"/>
+<line id="e_S8_F1" data-src="S8" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="746.0" stroke="#005f9e" class="edge"/>
+<line id="e_S8_F2" data-src="S8" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="746.0" stroke="#005f9e" class="edge"/>
+<line id="e_S8_F19" data-src="S8" data-end="F19" x1="286.0" y1="959.2" x2="648.0" y2="746.0" stroke="#005f9e" class="edge"/>
+<line id="e_S8_A3" data-src="S8" data-end="A3" x1="872.0" y1="746.0" x2="1236.0" y2="426.7" stroke="#005f9e" class="edge"/>
+<line id="e_S9_F4" data-src="S9" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="770.4" stroke="#8a96a3" class="edge"/>
+<line id="e_S9_A1" data-src="S9" data-end="A1" x1="872.0" y1="770.4" x2="1236.0" y2="162.0" stroke="#8a96a3" class="edge"/>
+<line id="e_S10_F1" data-src="S10" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="794.8" stroke="#c8862a" class="edge"/>
+<line id="e_S10_F2" data-src="S10" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="794.8" stroke="#c8862a" class="edge"/>
+<line id="e_S10_A5" data-src="S10" data-end="A5" x1="872.0" y1="794.8" x2="1236.0" y2="691.3" stroke="#c8862a" class="edge"/>
+<line id="e_S11_F1" data-src="S11" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="819.2" stroke="#c8862a" class="edge"/>
+<line id="e_S11_F9" data-src="S11" data-end="F9" x1="286.0" y1="490.7" x2="648.0" y2="819.2" stroke="#c8862a" class="edge"/>
+<line id="e_S11_A5" data-src="S11" data-end="A5" x1="872.0" y1="819.2" x2="1236.0" y2="691.3" stroke="#c8862a" class="edge"/>
+<line id="e_S12_F4" data-src="S12" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="843.6" stroke="#007e6c" class="edge"/>
+<line id="e_S12_A2" data-src="S12" data-end="A2" x1="872.0" y1="843.6" x2="1236.0" y2="294.3" stroke="#007e6c" class="edge"/>
+<line id="e_S13_F1" data-src="S13" data-end="F1" x1="286.0" y1="116.0" x2="648.0" y2="868.0" stroke="#c8862a" class="edge"/>
+<line id="e_S13_F2" data-src="S13" data-end="F2" x1="286.0" y1="162.8" x2="648.0" y2="868.0" stroke="#c8862a" class="edge"/>
+<line id="e_S13_F7" data-src="S13" data-end="F7" x1="286.0" y1="397.1" x2="648.0" y2="868.0" stroke="#c8862a" class="edge"/>
+<line id="e_S13_F9" data-src="S13" data-end="F9" x1="286.0" y1="490.7" x2="648.0" y2="868.0" stroke="#c8862a" class="edge"/>
+<line id="e_S13_A5" data-src="S13" data-end="A5" x1="872.0" y1="868.0" x2="1236.0" y2="691.3" stroke="#c8862a" class="edge"/>
+<line id="e_S13_A1" data-src="S13" data-end="A1" x1="872.0" y1="868.0" x2="1236.0" y2="162.0" stroke="#8a96a3" class="edge"/>
+<line id="e_S14_F4" data-src="S14" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="892.4" stroke="#007e6c" class="edge"/>
+<line id="e_S14_A2" data-src="S14" data-end="A2" x1="872.0" y1="892.4" x2="1236.0" y2="294.3" stroke="#007e6c" class="edge"/>
+<line id="e_S15_F6" data-src="S15" data-end="F6" x1="286.0" y1="350.2" x2="648.0" y2="916.8" stroke="#a6256e" class="edge"/>
+<line id="e_S15_F12" data-src="S15" data-end="F12" x1="286.0" y1="631.3" x2="648.0" y2="916.8" stroke="#a6256e" class="edge"/>
+<line id="e_S15_F4" data-src="S15" data-end="F4" x1="286.0" y1="256.5" x2="648.0" y2="916.8" stroke="#a6256e" class="edge"/>
+<line id="e_S15_A4" data-src="S15" data-end="A4" x1="872.0" y1="916.8" x2="1236.0" y2="559.0" stroke="#a6256e" class="edge"/>
+<line id="e_S16_A1" data-src="S16" data-end="A1" x1="872.0" y1="941.2" x2="1236.0" y2="162.0" stroke="#8a96a3" class="edge"/>
+<line id="e_S17_A1" data-src="S17" data-end="A1" x1="872.0" y1="965.6" x2="1236.0" y2="162.0" stroke="#8a96a3" class="edge"/>
+</g>
+<g id="factors">
+<g class="node fnode" data-id="F1">
+<rect class="hit" x="40" y="107.0" width="252" height="18"/>
+<text x="272.0" y="119.4" text-anchor="end" class="flab">Real interest rates (10y TIPS)</text>
+<text x="278.0" y="119.4" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="116.0" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F2">
+<rect class="hit" x="40" y="153.8" width="252" height="18"/>
+<text x="272.0" y="166.2" text-anchor="end" class="flab">US dollar (DXY)</text>
+<text x="278.0" y="166.2" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="162.8" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F3">
+<rect class="hit" x="40" y="200.7" width="252" height="18"/>
+<text x="272.0" y="213.1" text-anchor="end" class="flab">Buyer-weighted FX basket (EM importers)</text>
+<text x="278.0" y="213.1" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="209.7" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F4">
+<rect class="hit" x="40" y="247.5" width="252" height="18"/>
+<text x="272.0" y="259.9" text-anchor="end" class="flab">Realized inflation (CPI)</text>
+<text x="278.0" y="259.9" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="256.5" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F5">
+<rect class="hit" x="40" y="294.4" width="252" height="18"/>
+<text x="272.0" y="306.8" text-anchor="end" class="flab">Inflation expectations (breakevens / swaps)</text>
+<text x="278.0" y="306.8" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="303.4" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F6">
+<rect class="hit" x="40" y="341.2" width="252" height="18"/>
+<text x="272.0" y="353.6" text-anchor="end" class="flab">M2 / broad-money growth</text>
+<text x="278.0" y="353.6" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="350.2" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F7">
+<rect class="hit" x="40" y="388.1" width="252" height="18"/>
+<text x="272.0" y="400.5" text-anchor="end" class="flab">Central-bank / official-sector demand</text>
+<text x="278.0" y="400.5" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="397.1" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F8">
+<rect class="hit" x="40" y="434.9" width="252" height="18"/>
+<text x="272.0" y="447.3" text-anchor="end" class="flab">De-dollarization / reserve diversification</text>
+<text x="278.0" y="447.3" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="443.9" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F9">
+<rect class="hit" x="40" y="481.7" width="252" height="18"/>
+<text x="272.0" y="494.1" text-anchor="end" class="flab">Geopolitical risk</text>
+<text x="278.0" y="494.1" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="490.7" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F10">
+<rect class="hit" x="40" y="528.6" width="252" height="18"/>
+<text x="272.0" y="541.0" text-anchor="end" class="flab">MOVE index (rate volatility)</text>
+<text x="278.0" y="541.0" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="537.6" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F11">
+<rect class="hit" x="40" y="575.4" width="252" height="18"/>
+<text x="272.0" y="587.8" text-anchor="end" class="flab">Equity correlation / safe-haven role</text>
+<text x="278.0" y="587.8" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="584.4" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F12">
+<rect class="hit" x="40" y="622.3" width="252" height="18"/>
+<text x="272.0" y="634.7" text-anchor="end" class="flab">Mine supply &amp; recycling</text>
+<text x="278.0" y="634.7" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="631.3" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F13">
+<rect class="hit" x="40" y="669.1" width="252" height="18"/>
+<text x="272.0" y="681.5" text-anchor="end" class="flab">Stock-to-flow / above-ground stock</text>
+<text x="278.0" y="681.5" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="678.1" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F14">
+<rect class="hit" x="40" y="715.9" width="252" height="18"/>
+<text x="272.0" y="728.3" text-anchor="end" class="flab">Fiscal sustainability (debt, FTPL, r-g)</text>
+<text x="278.0" y="728.3" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="724.9" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F15">
+<rect class="hit" x="40" y="762.8" width="252" height="18"/>
+<text x="272.0" y="775.2" text-anchor="end" class="flab">Global liquidity</text>
+<text x="278.0" y="775.2" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="771.8" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F16">
+<rect class="hit" x="40" y="809.6" width="252" height="18"/>
+<text x="272.0" y="822.0" text-anchor="end" class="flab">Momentum / speculative positioning</text>
+<text x="278.0" y="822.0" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="818.6" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F17">
+<rect class="hit" x="40" y="856.5" width="252" height="18"/>
+<text x="272.0" y="868.9" text-anchor="end" class="flab">ETF / investment flows</text>
+<text x="278.0" y="868.9" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="865.5" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F18">
+<rect class="hit" x="40" y="903.3" width="252" height="18"/>
+<text x="272.0" y="915.7" text-anchor="end" class="flab">Jewelry &amp; EM consumer demand</text>
+<text x="278.0" y="915.7" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="912.3" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F19">
+<rect class="hit" x="40" y="950.2" width="252" height="18"/>
+<text x="272.0" y="962.6" text-anchor="end" class="flab">Nominal yields / opportunity cost</text>
+<text x="278.0" y="962.6" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="959.2" r="3.2" class="fdot"/>
+</g>
+<g class="node fnode" data-id="F20">
+<rect class="hit" x="40" y="997.0" width="252" height="18"/>
+<text x="272.0" y="1009.4" text-anchor="end" class="flab">L10Y EWMA fair-value anchor</text>
+<text x="278.0" y="1009.4" text-anchor="end" class="fdeg">·</text>
+<circle cx="286.0" cy="1006.0" r="3.2" class="fdot"/>
+</g>
+</g>
+<g id="sources">
+<g class="node snode" data-id="P1" data-type="paper">
+<title>Barsky &amp; Summers (1988) — Real-rate inversion explains Gibson's Paradox; gold as real bond</title>
+<rect class="sbox" x="648" y="100.6" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="100.6" width="4" height="18.8" fill="#005f9e"/>
+<text x="760" y="113.2" text-anchor="middle" class="slab paper">Barsky &amp; Summers (1988)</text>
+</g>
+<g class="node snode" data-id="P2" data-type="paper">
+<title>Jermann (2025) — No-arbitrage: gold = zero-coupon real bond plus embedded equity-tail put</title>
+<rect class="sbox" x="648" y="125.0" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="125.0" width="4" height="18.8" fill="#005f9e"/>
+<text x="760" y="137.6" text-anchor="middle" class="slab paper">Jermann (2025)</text>
+</g>
+<g class="node snode" data-id="P3" data-type="paper">
+<title>Erb &amp; Harvey (2013) — Real rate + golden constant; momentum demand; no reliable inflation hedge</title>
+<rect class="sbox" x="648" y="149.4" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="149.4" width="4" height="18.8" fill="#005f9e"/>
+<text x="760" y="162.0" text-anchor="middle" class="slab paper">Erb &amp; Harvey (2013)</text>
+</g>
+<g class="node snode" data-id="P4" data-type="paper">
+<title>PIMCO / Johnson &amp; Sharenow — Real rate duration ~18yr and DXY dominate gold in factor model</title>
+<rect class="sbox" x="648" y="173.8" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="173.8" width="4" height="18.8" fill="#005f9e"/>
+<text x="760" y="186.4" text-anchor="middle" class="slab paper">PIMCO / Johnson &amp; Sharenow</text>
+</g>
+<g class="node snode" data-id="P5" data-type="paper">
+<title>Jastram (1977/2009) — Real gold price mean-reverts; purchasing power preserved over centuries</title>
+<rect class="sbox" x="648" y="198.2" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="198.2" width="4" height="18.8" fill="#007e6c"/>
+<text x="760" y="210.8" text-anchor="middle" class="slab paper">Jastram (1977/2009)</text>
+</g>
+<g class="node snode" data-id="P6" data-type="paper">
+<title>Ghosh, Levin, Macmillan &amp; Wright (2004) — Long-run CPI cointegration; gold hedges inflation over very long spans</title>
+<rect class="sbox" x="648" y="222.6" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="222.6" width="4" height="18.8" fill="#007e6c"/>
+<text x="760" y="235.2" text-anchor="middle" class="slab paper">Ghosh, Levin, Macmillan &amp; Wright (2004)</text>
+</g>
+<g class="node snode" data-id="P7" data-type="paper">
+<title>Barro &amp; Misra (2016) — Gold earns +1.1% real/yr over 175yr; consistent with zero-real anchor</title>
+<rect class="sbox" x="648" y="247.0" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="247.0" width="4" height="18.8" fill="#007e6c"/>
+<text x="760" y="259.6" text-anchor="middle" class="slab paper">Barro &amp; Misra (2016)</text>
+</g>
+<g class="node snode" data-id="P8" data-type="paper">
+<title>Buiter (2014) — Gold near-zero intrinsic value; price sustained by fiat debasement fears</title>
+<rect class="sbox" x="648" y="271.4" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="271.4" width="4" height="18.8" fill="#a6256e"/>
+<text x="760" y="284.0" text-anchor="middle" class="slab paper">Buiter (2014)</text>
+</g>
+<g class="node snode" data-id="P9" data-type="paper">
+<title>Bordo, Dittmar &amp; Gavin (2003) — Gold standard stabilizes price level; fiat debasement erodes real value</title>
+<rect class="sbox" x="648" y="295.8" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="295.8" width="4" height="18.8" fill="#007e6c"/>
+<text x="760" y="308.4" text-anchor="middle" class="slab paper">Bordo, Dittmar &amp; Gavin (2003)</text>
+</g>
+<g class="node snode" data-id="P10" data-type="paper">
+<title>Arslanalp, Eichengreen &amp; Simpson-Bell (2022) — USD reserve share fell 12pp via stealth diversification into gold</title>
+<rect class="sbox" x="648" y="320.2" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="320.2" width="4" height="18.8" fill="#5b3a8c"/>
+<text x="760" y="332.8" text-anchor="middle" class="slab paper">Arslanalp, Eichengreen &amp; Simpson-Bell (2022)</text>
+</g>
+<g class="node snode" data-id="P11" data-type="paper">
+<title>Weiss (2025) — CB gold accumulation driven by sanctions exposure and de-dollarization</title>
+<rect class="sbox" x="648" y="344.6" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="344.6" width="4" height="18.8" fill="#5b3a8c"/>
+<text x="760" y="357.2" text-anchor="middle" class="slab paper">Weiss (2025)</text>
+</g>
+<g class="node snode" data-id="P12" data-type="paper">
+<title>ECB (2025) — Official-sector gold demand structural and price-insensitive post-2022</title>
+<rect class="sbox" x="648" y="369.0" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="369.0" width="4" height="18.8" fill="#5b3a8c"/>
+<text x="760" y="381.6" text-anchor="middle" class="slab paper">ECB (2025)</text>
+</g>
+<g class="node snode" data-id="P13" data-type="paper">
+<title>McDowell (2023) — US sanctions exposure best identifies CB gold accumulation motive</title>
+<rect class="sbox" x="648" y="393.4" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="393.4" width="4" height="18.8" fill="#5b3a8c"/>
+<text x="760" y="406.0" text-anchor="middle" class="slab paper">McDowell (2023)</text>
+</g>
+<g class="node snode" data-id="P14" data-type="paper">
+<title>WGC / Palmberg (2024) — Gold return = wealth-share equilibrium on global portfolio; ~2.7% real</title>
+<rect class="sbox" x="648" y="417.8" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="417.8" width="4" height="18.8" fill="#3f7d5a"/>
+<text x="760" y="430.4" text-anchor="middle" class="slab paper">WGC / Palmberg (2024)</text>
+</g>
+<g class="node snode" data-id="P15" data-type="paper">
+<title>Gorton &amp; Rouwenhorst (2006) — Commodity futures earn equity-like return; gold as inflation hedge/diversifier</title>
+<rect class="sbox" x="648" y="442.2" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="442.2" width="4" height="18.8" fill="#3f7d5a"/>
+<text x="760" y="454.8" text-anchor="middle" class="slab paper">Gorton &amp; Rouwenhorst (2006)</text>
+</g>
+<g class="node snode" data-id="P16" data-type="paper">
+<title>O'Connor, Lucey, Batten &amp; Baur (2015) — Physical tonnage accounting; price demand-driven; supply inelastic ~1.5%/yr</title>
+<rect class="sbox" x="648" y="466.6" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="466.6" width="4" height="18.8" fill="#3f7d5a"/>
+<text x="760" y="479.2" text-anchor="middle" class="slab paper">O'Connor, Lucey, Batten &amp; Baur (2015)</text>
+</g>
+<g class="node snode" data-id="P17" data-type="paper">
+<title>Baur &amp; Lucey (2010) — Gold hedges equities on average; weak brief safe haven in equity tail</title>
+<rect class="sbox" x="648" y="491.0" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="491.0" width="4" height="18.8" fill="#9aa6b3"/>
+<text x="760" y="503.6" text-anchor="middle" class="slab paper">Baur &amp; Lucey (2010)</text>
+</g>
+<g class="node snode" data-id="P18" data-type="paper">
+<title>Reboredo (2013) — Gold hedges USD depreciation; dollar safe haven not equity safe haven</title>
+<rect class="sbox" x="648" y="515.4" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="515.4" width="4" height="18.8" fill="#005f9e"/>
+<text x="760" y="528.0" text-anchor="middle" class="slab paper">Reboredo (2013)</text>
+</g>
+<g class="node snode" data-id="P19" data-type="paper">
+<title>Moskowitz, Ooi &amp; Pedersen (2012) — Time-series momentum in futures; tactical signal, no long-run drift</title>
+<rect class="sbox" x="648" y="539.8" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="539.8" width="4" height="18.8" fill="#9aa6b3"/>
+<text x="760" y="552.4" text-anchor="middle" class="slab paper">Moskowitz, Ooi &amp; Pedersen (2012)</text>
+</g>
+<g class="node snode" data-id="S1" data-type="shop">
+<title>Blackrock — tactical play, no return model</title>
+<rect class="sbox" x="648" y="565.8" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="565.8" width="4" height="18.8" fill="#9aa6b3"/>
+<text x="760" y="578.4" text-anchor="middle" class="slab shop">Blackrock</text>
+</g>
+<g class="node snode" data-id="S2" data-type="shop">
+<title>Research Affiliates — zero real; 20-100% mean-reversion to 10Y EWMA</title>
+<rect class="sbox" x="648" y="590.2" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="590.2" width="4" height="18.8" fill="#c8862a"/>
+<text x="760" y="602.8" text-anchor="middle" class="slab shop">Research Affiliates</text>
+</g>
+<g class="node snode" data-id="S3" data-type="shop">
+<title>AQR — ~1.4% real; historical avg + tail-risk hedging</title>
+<rect class="sbox" x="648" y="614.6" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="614.6" width="4" height="18.8" fill="#8a96a3"/>
+<text x="760" y="627.2" text-anchor="middle" class="slab shop">AQR</text>
+</g>
+<g class="node snode" data-id="S4" data-type="shop">
+<title>T. Rowe Price — factor regression on equity premia + qualitative overlay</title>
+<rect class="sbox" x="648" y="639.0" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="639.0" width="4" height="18.8" fill="#005f9e"/>
+<text x="760" y="651.6" text-anchor="middle" class="slab shop">T. Rowe Price</text>
+</g>
+<g class="node snode" data-id="S5" data-type="shop">
+<title>Fidelity — no fair-value anchor; range of models</title>
+<rect class="sbox" x="648" y="663.4" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="663.4" width="4" height="18.8" fill="#8a96a3"/>
+<text x="760" y="676.0" text-anchor="middle" class="slab shop">Fidelity</text>
+</g>
+<g class="node snode" data-id="S6" data-type="shop">
+<title>State Street — ~2.5%; commodity-cycle mean-reversion + EM demand</title>
+<rect class="sbox" x="648" y="687.8" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="687.8" width="4" height="18.8" fill="#c8862a"/>
+<text x="760" y="700.4" text-anchor="middle" class="slab shop">State Street</text>
+</g>
+<g class="node snode" data-id="S7" data-type="shop">
+<title>JPM — ~5.5%; real-rate + inflation + CB-demand decomposition</title>
+<rect class="sbox" x="648" y="712.2" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="712.2" width="4" height="18.8" fill="#005f9e"/>
+<text x="760" y="724.8" text-anchor="middle" class="slab shop">JPM</text>
+</g>
+<g class="node snode" data-id="S8" data-type="shop">
+<title>PIMCO — ~18yr real duration; real-rate factor decomposition</title>
+<rect class="sbox" x="648" y="736.6" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="736.6" width="4" height="18.8" fill="#005f9e"/>
+<text x="760" y="749.2" text-anchor="middle" class="slab shop">PIMCO</text>
+</g>
+<g class="node snode" data-id="S9" data-type="shop">
+<title>Schroders — 35-year historic average nominal returns</title>
+<rect class="sbox" x="648" y="761.0" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="761.0" width="4" height="18.8" fill="#8a96a3"/>
+<text x="760" y="773.6" text-anchor="middle" class="slab shop">Schroders</text>
+</g>
+<g class="node snode" data-id="S10" data-type="shop">
+<title>Amundi — ~6%; fair-value equation: real rates + USD</title>
+<rect class="sbox" x="648" y="785.4" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="785.4" width="4" height="18.8" fill="#c8862a"/>
+<text x="760" y="798.0" text-anchor="middle" class="slab shop">Amundi</text>
+</g>
+<g class="node snode" data-id="S11" data-type="shop">
+<title>Mercer — ~3.4%; regime-switching regular + stressed states</title>
+<rect class="sbox" x="648" y="809.8" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="809.8" width="4" height="18.8" fill="#c8862a"/>
+<text x="760" y="822.4" text-anchor="middle" class="slab shop">Mercer</text>
+</g>
+<g class="node snode" data-id="S12" data-type="shop">
+<title>Meketa — ~2.4%; zero real; inflation pass-through only</title>
+<rect class="sbox" x="648" y="834.2" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="834.2" width="4" height="18.8" fill="#007e6c"/>
+<text x="760" y="846.8" text-anchor="middle" class="slab shop">Meketa</text>
+</g>
+<g class="node snode" data-id="S13" data-type="shop">
+<title>Cambridge Associates — no published number; multi-driver qualitative + mean-reversion</title>
+<rect class="sbox" x="648" y="858.6" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="858.6" width="4" height="18.8" fill="#c8862a"/>
+<text x="760" y="871.2" text-anchor="middle" class="slab shop">Cambridge Associates</text>
+</g>
+<g class="node snode" data-id="S14" data-type="shop">
+<title>Aon — ~2.3%; zero real returns</title>
+<rect class="sbox" x="648" y="883.0" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="883.0" width="4" height="18.8" fill="#007e6c"/>
+<text x="760" y="895.6" text-anchor="middle" class="slab shop">Aon</text>
+</g>
+<g class="node snode" data-id="S15" data-type="shop">
+<title>Wilshire — ~7%; M2 growth - supply growth + 0.5×inflation</title>
+<rect class="sbox" x="648" y="907.4" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="907.4" width="4" height="18.8" fill="#a6256e"/>
+<text x="760" y="920.0" text-anchor="middle" class="slab shop">Wilshire</text>
+</g>
+<g class="node snode" data-id="S16" data-type="shop">
+<title>Rockefeller Family Office — long-term historical averages only</title>
+<rect class="sbox" x="648" y="931.8" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="931.8" width="4" height="18.8" fill="#8a96a3"/>
+<text x="760" y="944.4" text-anchor="middle" class="slab shop">Rockefeller Family Office</text>
+</g>
+<g class="node snode" data-id="S17" data-type="shop">
+<title>Remaco — ~1%; median of 24-person expert survey</title>
+<rect class="sbox" x="648" y="956.2" width="224" height="18.8" rx="4"/>
+<rect class="stab" x="648" y="956.2" width="4" height="18.8" fill="#8a96a3"/>
+<text x="760" y="968.8" text-anchor="middle" class="slab shop">Remaco</text>
+</g>
+</g>
+<line x1="646" y1="562.2" x2="874" y2="562.2" class="divider"/>
+<text x="636" y="96.0" text-anchor="end" class="blocklab">ACADEMIC</text>
+<text x="636" y="563.2" text-anchor="end" class="blocklab">INDUSTRY</text>
+<g id="approaches">
+<g class="node anode" data-id="A1">
+<rect class="hit" x="1230" y="147.0" width="270" height="30"/>
+<circle cx="1236" cy="162.0" r="5" fill="#8a96a3" class="adot"/>
+<text x="1250" y="161.0" class="alab" fill="#8a96a3">Historical-average extrapolation (incl. survey)</text>
+<text x="1250" y="173.0" class="acount">6 sources</text>
+</g>
+<g class="node anode" data-id="A2">
+<rect class="hit" x="1230" y="279.3" width="270" height="30"/>
+<circle cx="1236" cy="294.3" r="5" fill="#007e6c" class="adot"/>
+<text x="1250" y="293.3" class="alab" fill="#007e6c">Zero-real / Golden-Constant anchor</text>
+<text x="1250" y="305.3" class="acount">8 sources</text>
+</g>
+<g class="node anode" data-id="A3">
+<rect class="hit" x="1230" y="411.7" width="270" height="30"/>
+<circle cx="1236" cy="426.7" r="5" fill="#005f9e" class="adot"/>
+<text x="1250" y="425.7" class="alab" fill="#005f9e">Real-rate + USD factor model</text>
+<text x="1250" y="437.7" class="acount">9 sources</text>
+</g>
+<g class="node anode" data-id="A4">
+<rect class="hit" x="1230" y="544.0" width="270" height="30"/>
+<circle cx="1236" cy="559.0" r="5" fill="#a6256e" class="adot"/>
+<text x="1250" y="558.0" class="alab" fill="#a6256e">Monetary / M2-debasement</text>
+<text x="1250" y="570.0" class="acount">3 sources</text>
+</g>
+<g class="node anode" data-id="A5">
+<rect class="hit" x="1230" y="676.3" width="270" height="30"/>
+<circle cx="1236" cy="691.3" r="5" fill="#c8862a" class="adot"/>
+<text x="1250" y="690.3" class="alab" fill="#c8862a">Trend + mean-reversion to fair value (regime-switching)</text>
+<text x="1250" y="702.3" class="acount">5 sources</text>
+</g>
+<g class="node anode" data-id="A6">
+<rect class="hit" x="1230" y="808.7" width="270" height="30"/>
+<circle cx="1236" cy="823.7" r="5" fill="#5b3a8c" class="adot"/>
+<text x="1250" y="822.7" class="alab" fill="#5b3a8c">Official-sector / de-dollarization demand</text>
+<text x="1250" y="834.7" class="acount">4 sources</text>
+</g>
+<g class="node anode" data-id="A7">
+<rect class="hit" x="1230" y="941.0" width="270" height="30"/>
+<circle cx="1236" cy="956.0" r="5" fill="#3f7d5a" class="adot"/>
+<text x="1250" y="955.0" class="alab" fill="#3f7d5a">Supply-demand &amp; portfolio / wealth-share equilibrium</text>
+<text x="1250" y="967.0" class="acount">4 sources</text>
+</g>
+</g>
+</svg></div>
+<div class="foot">Approaches are a MECE read of how a 20-year gold return gets built. Factor degree = how many sources cite it (hover an approach to see its supporting sources and the factors they lean on). Source notes on hover. · Built from our gold CMA lit review · no black ink, straight connectors.</div>
+</div>
+<script>
+const ADJ={"P1": ["e_P1_F1", "e_P1_F2", "e_P1_F19", "e_P1_A3"], "F1": ["e_P1_F1", "e_P2_F1", "e_P3_F1", "e_P4_F1", "e_S2_F1", "e_S3_F1", "e_S4_F1", "e_S5_F1", "e_S7_F1", "e_S8_F1", "e_S10_F1", "e_S11_F1", "e_S13_F1"], "F2": ["e_P1_F2", "e_P2_F2", "e_P3_F2", "e_P4_F2", "e_P10_F2", "e_P17_F2", "e_P18_F2", "e_S4_F2", "e_S7_F2", "e_S8_F2", "e_S10_F2", "e_S13_F2"], "F19": ["e_P1_F19", "e_P2_F19", "e_P3_F19", "e_P4_F19", "e_S4_F19", "e_S6_F19", "e_S7_F19", "e_S8_F19"], "A3": ["e_P1_A3", "e_P2_A3", "e_P3_A3", "e_P4_A3", "e_P18_A3", "e_S4_A3", "e_S5_A3", "e_S7_A3", "e_S8_A3"], "P2": ["e_P2_F1", "e_P2_F2", "e_P2_F11", "e_P2_F19", "e_P2_A3"], "F11": ["e_P2_F11", "e_P17_F11", "e_P18_F11", "e_S4_F11"], "P3": ["e_P3_F1", "e_P3_F2", "e_P3_F4", "e_P3_F16", "e_P3_F19", "e_P3_A3", "e_P3_A2"], "F4": ["e_P3_F4", "e_P5_F4", "e_P6_F4", "e_P7_F4", "e_P9_F4", "e_S2_F4", "e_S5_F4", "e_S9_F4", "e_S12_F4", "e_S14_F4", "e_S15_F4"], "F16": ["e_P3_F16", "e_P19_F16"], "A2": ["e_P3_A2", "e_P5_A2", "e_P6_A2", "e_P7_A2", "e_P9_A2", "e_S2_A2", "e_S12_A2", "e_S14_A2"], "P4": ["e_P4_F1", "e_P4_F2", "e_P4_F19", "e_P4_A3"], "P5": ["e_P5_F4", "e_P5_A2"], "P6": ["e_P6_F4", "e_P6_F5", "e_P6_A2"], "F5": ["e_P6_F5", "e_P7_F5", "e_P9_F5"], "P7": ["e_P7_F4", "e_P7_F5", "e_P7_A2"], "P8": ["e_P8_F6", "e_P8_F13", "e_P8_F14", "e_P8_A4"], "F6": ["e_P8_F6", "e_P9_F6", "e_S15_F6"], "F13": ["e_P8_F13", "e_P14_F13", "e_P16_F13"], "F14": ["e_P8_F14", "e_P9_F14"], "A4": ["e_P8_A4", "e_P9_A4", "e_S15_A4"], "P9": ["e_P9_F4", "e_P9_F5", "e_P9_F6", "e_P9_F14", "e_P9_A2", "e_P9_A4"], "P10": ["e_P10_F2", "e_P10_F7", "e_P10_F8", "e_P10_A6"], "F7": ["e_P10_F7", "e_P11_F7", "e_P12_F7", "e_P13_F7", "e_P16_F7", "e_S7_F7", "e_S13_F7"], "F8": ["e_P10_F8", "e_P11_F8", "e_P12_F8", "e_P13_F8"], "A6": ["e_P10_A6", "e_P11_A6", "e_P12_A6", "e_P13_A6"], "P11": ["e_P11_F7", "e_P11_F8", "e_P11_F9", "e_P11_A6"], "F9": ["e_P11_F9", "e_P13_F9", "e_P17_F9", "e_P18_F9", "e_S11_F9", "e_S13_F9"], "P12": ["e_P12_F7", "e_P12_F8", "e_P12_F15", "e_P12_A6"], "F15": ["e_P12_F15", "e_P14_F15", "e_P15_F15"], "P13": ["e_P13_F7", "e_P13_F8", "e_P13_F9", "e_P13_A6"], "P14": ["e_P14_F12", "e_P14_F13", "e_P14_F15", "e_P14_F18", "e_P14_A7"], "F12": ["e_P14_F12", "e_P15_F12", "e_P16_F12", "e_S6_F12", "e_S15_F12"], "F18": ["e_P14_F18", "e_P15_F18", "e_P16_F18", "e_S6_F18"], "A7": ["e_P14_A7", "e_P15_A7", "e_P16_A7", "e_S7_A7"], "P15": ["e_P15_F12", "e_P15_F15", "e_P15_F18", "e_P15_A7"], "P16": ["e_P16_F7", "e_P16_F12", "e_P16_F13", "e_P16_F18", "e_P16_A7"], "P17": ["e_P17_F2", "e_P17_F9", "e_P17_F11"], "P18": ["e_P18_F2", "e_P18_F9", "e_P18_F11", "e_P18_A3"], "P19": ["e_P19_F16"], "S2": ["e_S2_F20", "e_S2_F1", "e_S2_F4", "e_S2_A5", "e_S2_A2"], "F20": ["e_S2_F20"], "A5": ["e_S2_A5", "e_S6_A5", "e_S10_A5", "e_S11_A5", "e_S13_A5"], "S3": ["e_S3_F1", "e_S3_F10", "e_S3_A1"], "F10": ["e_S3_F10"], "A1": ["e_S3_A1", "e_S5_A1", "e_S9_A1", "e_S13_A1", "e_S16_A1", "e_S17_A1"], "S4": ["e_S4_F1", "e_S4_F2", "e_S4_F11", "e_S4_F19", "e_S4_A3"], "S5": ["e_S5_F1", "e_S5_F4", "e_S5_A1", "e_S5_A3"], "S6": ["e_S6_F19", "e_S6_F12", "e_S6_F18", "e_S6_A5"], "S7": ["e_S7_F1", "e_S7_F2", "e_S7_F7", "e_S7_F19", "e_S7_A3", "e_S7_A7"], "S8": ["e_S8_F1", "e_S8_F2", "e_S8_F19", "e_S8_A3"], "S9": ["e_S9_F4", "e_S9_A1"], "S10": ["e_S10_F1", "e_S10_F2", "e_S10_A5"], "S11": ["e_S11_F1", "e_S11_F9", "e_S11_A5"], "S12": ["e_S12_F4", "e_S12_A2"], "S13": ["e_S13_F1", "e_S13_F2", "e_S13_F7", "e_S13_F9", "e_S13_A5", "e_S13_A1"], "S14": ["e_S14_F4", "e_S14_A2"], "S15": ["e_S15_F6", "e_S15_F12", "e_S15_F4", "e_S15_A4"], "S16": ["e_S16_A1"], "S17": ["e_S17_A1"]}, ANN={"P1": {"name": "Barsky & Summers (1988)", "note": "Real-rate inversion explains Gibson's Paradox; gold as real bond", "f": ["F1", "F2", "F19"], "a": ["A3"]}, "P2": {"name": "Jermann (2025)", "note": "No-arbitrage: gold = zero-coupon real bond plus embedded equity-tail put", "f": ["F1", "F2", "F11", "F19"], "a": ["A3"]}, "P3": {"name": "Erb & Harvey (2013)", "note": "Real rate + golden constant; momentum demand; no reliable inflation hedge", "f": ["F1", "F2", "F4", "F16", "F19"], "a": ["A3", "A2"]}, "P4": {"name": "PIMCO / Johnson & Sharenow", "note": "Real rate duration ~18yr and DXY dominate gold in factor model", "f": ["F1", "F2", "F19"], "a": ["A3"]}, "P5": {"name": "Jastram (1977/2009)", "note": "Real gold price mean-reverts; purchasing power preserved over centuries", "f": ["F4"], "a": ["A2"]}, "P6": {"name": "Ghosh, Levin, Macmillan & Wright (2004)", "note": "Long-run CPI cointegration; gold hedges inflation over very long spans", "f": ["F4", "F5"], "a": ["A2"]}, "P7": {"name": "Barro & Misra (2016)", "note": "Gold earns +1.1% real/yr over 175yr; consistent with zero-real anchor", "f": ["F4", "F5"], "a": ["A2"]}, "P8": {"name": "Buiter (2014)", "note": "Gold near-zero intrinsic value; price sustained by fiat debasement fears", "f": ["F6", "F13", "F14"], "a": ["A4"]}, "P9": {"name": "Bordo, Dittmar & Gavin (2003)", "note": "Gold standard stabilizes price level; fiat debasement erodes real value", "f": ["F4", "F5", "F6", "F14"], "a": ["A2", "A4"]}, "P10": {"name": "Arslanalp, Eichengreen & Simpson-Bell (2022)", "note": "USD reserve share fell 12pp via stealth diversification into gold", "f": ["F2", "F7", "F8"], "a": ["A6"]}, "P11": {"name": "Weiss (2025)", "note": "CB gold accumulation driven by sanctions exposure and de-dollarization", "f": ["F7", "F8", "F9"], "a": ["A6"]}, "P12": {"name": "ECB (2025)", "note": "Official-sector gold demand structural and price-insensitive post-2022", "f": ["F7", "F8", "F15"], "a": ["A6"]}, "P13": {"name": "McDowell (2023)", "note": "US sanctions exposure best identifies CB gold accumulation motive", "f": ["F7", "F8", "F9"], "a": ["A6"]}, "P14": {"name": "WGC / Palmberg (2024)", "note": "Gold return = wealth-share equilibrium on global portfolio; ~2.7% real", "f": ["F12", "F13", "F15", "F18"], "a": ["A7"]}, "P15": {"name": "Gorton & Rouwenhorst (2006)", "note": "Commodity futures earn equity-like return; gold as inflation hedge/diversifier", "f": ["F12", "F15", "F18"], "a": ["A7"]}, "P16": {"name": "O'Connor, Lucey, Batten & Baur (2015)", "note": "Physical tonnage accounting; price demand-driven; supply inelastic ~1.5%/yr", "f": ["F7", "F12", "F13", "F18"], "a": ["A7"]}, "P17": {"name": "Baur & Lucey (2010)", "note": "Gold hedges equities on average; weak brief safe haven in equity tail", "f": ["F2", "F9", "F11"], "a": []}, "P18": {"name": "Reboredo (2013)", "note": "Gold hedges USD depreciation; dollar safe haven not equity safe haven", "f": ["F2", "F9", "F11"], "a": ["A3"]}, "P19": {"name": "Moskowitz, Ooi & Pedersen (2012)", "note": "Time-series momentum in futures; tactical signal, no long-run drift", "f": ["F16"], "a": []}, "S1": {"name": "Blackrock", "note": "tactical play, no return model", "f": [], "a": []}, "S2": {"name": "Research Affiliates", "note": "zero real; 20-100% mean-reversion to 10Y EWMA", "f": ["F20", "F1", "F4"], "a": ["A5", "A2"]}, "S3": {"name": "AQR", "note": "~1.4% real; historical avg + tail-risk hedging", "f": ["F1", "F10"], "a": ["A1"]}, "S4": {"name": "T. Rowe Price", "note": "factor regression on equity premia + qualitative overlay", "f": ["F1", "F2", "F11", "F19"], "a": ["A3"]}, "S5": {"name": "Fidelity", "note": "no fair-value anchor; range of models", "f": ["F1", "F4"], "a": ["A1", "A3"]}, "S6": {"name": "State Street", "note": "~2.5%; commodity-cycle mean-reversion + EM demand", "f": ["F19", "F12", "F18"], "a": ["A5"]}, "S7": {"name": "JPM", "note": "~5.5%; real-rate + inflation + CB-demand decomposition", "f": ["F1", "F2", "F7", "F19"], "a": ["A3", "A7"]}, "S8": {"name": "PIMCO", "note": "~18yr real duration; real-rate factor decomposition", "f": ["F1", "F2", "F19"], "a": ["A3"]}, "S9": {"name": "Schroders", "note": "35-year historic average nominal returns", "f": ["F4"], "a": ["A1"]}, "S10": {"name": "Amundi", "note": "~6%; fair-value equation: real rates + USD", "f": ["F1", "F2"], "a": ["A5"]}, "S11": {"name": "Mercer", "note": "~3.4%; regime-switching regular + stressed states", "f": ["F1", "F9"], "a": ["A5"]}, "S12": {"name": "Meketa", "note": "~2.4%; zero real; inflation pass-through only", "f": ["F4"], "a": ["A2"]}, "S13": {"name": "Cambridge Associates", "note": "no published number; multi-driver qualitative + mean-reversion", "f": ["F1", "F2", "F7", "F9"], "a": ["A5", "A1"]}, "S14": {"name": "Aon", "note": "~2.3%; zero real returns", "f": ["F4"], "a": ["A2"]}, "S15": {"name": "Wilshire", "note": "~7%; M2 growth - supply growth + 0.5\u00d7inflation", "f": ["F6", "F12", "F4"], "a": ["A4"]}, "S16": {"name": "Rockefeller Family Office", "note": "long-term historical averages only", "f": [], "a": ["A1"]}, "S17": {"name": "Remaco", "note": "~1%; median of 24-person expert survey", "f": [], "a": ["A1"]}}, FL={"F1": "Real interest rates (10y TIPS)", "F2": "US dollar (DXY)", "F3": "Buyer-weighted FX basket (EM importers)", "F4": "Realized inflation (CPI)", "F5": "Inflation expectations (breakevens / swaps)", "F6": "M2 / broad-money growth", "F7": "Central-bank / official-sector demand", "F8": "De-dollarization / reserve diversification", "F9": "Geopolitical risk", "F10": "MOVE index (rate volatility)", "F11": "Equity correlation / safe-haven role", "F12": "Mine supply & recycling", "F13": "Stock-to-flow / above-ground stock", "F14": "Fiscal sustainability (debt, FTPL, r-g)", "F15": "Global liquidity", "F16": "Momentum / speculative positioning", "F17": "ETF / investment flows", "F18": "Jewelry & EM consumer demand", "F19": "Nominal yields / opportunity cost", "F20": "L10Y EWMA fair-value anchor"}, AL={"A1": "Historical-average extrapolation (incl. survey)", "A2": "Zero-real / Golden-Constant anchor", "A3": "Real-rate + USD factor model", "A4": "Monetary / M2-debasement", "A5": "Trend + mean-reversion to fair value (regime-switching)", "A6": "Official-sector / de-dollarization demand", "A7": "Supply-demand & portfolio / wealth-share equilibrium"};
+const svg=document.getElementById('map');
+const edges=[...svg.querySelectorAll('.edge')];
+const nodes=[...svg.querySelectorAll('.node')];
+let pinned=null;
+function clear(){
+  svg.classList.remove('has-sel');
+  edges.forEach(e=>e.classList.remove('lit'));
+  nodes.forEach(n=>n.classList.remove('lit','sel'));
+}
+function activate(id){
+  const eids=ADJ[id]||[];
+  if(!eids.length){return;}
+  svg.classList.add('has-sel');
+  const lit=new Set([id]);
+  eids.forEach(eid=>{const el=document.getElementById(eid);if(el){el.classList.add('lit');
+    lit.add(el.dataset.src);lit.add(el.dataset.end);}});
+  nodes.forEach(n=>{const nid=n.dataset.id;
+    if(lit.has(nid))n.classList.add('lit');
+    if(nid===id)n.classList.add('sel');});
+}
+nodes.forEach(n=>{
+  n.addEventListener('mouseenter',()=>{if(pinned)return;clear();activate(n.dataset.id);});
+  n.addEventListener('mouseleave',()=>{if(pinned)return;clear();});
+  n.addEventListener('click',e=>{e.stopPropagation();
+    if(pinned===n.dataset.id){pinned=null;clear();}
+    else{pinned=n.dataset.id;clear();activate(n.dataset.id);}});
+});
+svg.addEventListener('click',()=>{pinned=null;clear();});
+</script>
+</body></html>

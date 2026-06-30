@@ -79,5 +79,21 @@
       "long-only"
     ],
     "pinned": false
+  },
+  {
+    "title": "Gold CMA \u2014 what drives it: papers & shops \u00d7 price factors \u00d7 approach families (interactive map)",
+    "url": "gold-cma-map/cma_map.html",
+    "date": "2026-06-30",
+    "kind": "Dashboard",
+    "desc": "Interactive relationship map behind the gold capital-market assumption. Center column = every major source from our gold-CMA literature review (19 academic papers + 17 industry shops). Lines LEFT connect each source to the price factors it claims move gold (20 elements: real rates, DXY, a buyer-weighted FX basket, inflation swaps, MOVE, M2, central-bank demand, de-dollarization, geopolitical risk, supply, etc.); lines RIGHT connect it to its modeling approach (7 MECE families: historical-average, zero-real/Golden-Constant, real-rate+USD factor model, monetary/M2-debasement, trend+mean-reversion/regime-switching, official-sector/de-dollarization, supply-demand/wealth-share). Hover any node to trace its links; click to pin. Self-contained, no dependencies.",
+    "version": "v1",
+    "tags": [
+      "gold",
+      "CMA",
+      "literature-review",
+      "GOLDBTC",
+      "factors"
+    ],
+    "pinned": true
   }
 ]
