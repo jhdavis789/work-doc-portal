@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gold &amp; Bitcoin CMA — evidence deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-darkest:#00294b; --navy:#005f9e; --teal:#007e6c; --teal-light:#75d9d7;
+  --magenta:#a6256e; --warm:#ebe0da; --bg-blue:#def5ff; --bg-teal:#ddf6f6;
+  --gray-100:#f1f1f1; --gray-500:#6b7f8a; --gold:#c9a227;
+}
+*{box-sizing:border-box;margin:0}
+body{background:#eef0f3;font-family:Inter,system-ui,sans-serif;color:var(--navy-darkest)}
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.deck{position:relative;width:1440px;height:900px;background:#fff;
+      box-shadow:0 8px 40px rgba(0,41,75,.18);overflow:hidden;transform-origin:center center;flex-shrink:0}
+.slide{position:absolute;inset:0;padding:64px 84px 88px;opacity:0;pointer-events:none;
+       transition:opacity .25s ease;display:flex;flex-direction:column}
+.slide.active{opacity:1;pointer-events:auto}
+.eyebrow{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--navy);font-weight:600;margin-bottom:10px}
+h1{font-family:"Source Serif 4",Georgia,serif;font-size:34px;line-height:1.22;font-weight:700;margin-bottom:26px;max-width:1220px}
+.cover h1{font-size:52px;line-height:1.15;margin:24px 0 18px}
+.sub{font-size:17px;color:var(--gray-500);max-width:980px;line-height:1.5}
+.body{flex:1;display:flex;gap:36px;min-height:0}
+.col{flex:1;min-width:0}
+p,li{font-size:16.5px;line-height:1.52}
+ul{padding-left:20px;display:flex;flex-direction:column;gap:10px}
+b{color:var(--navy-darkest)}
+.callout{background:var(--bg-blue);border-left:4px solid var(--navy);padding:14px 18px;border-radius:0 8px 8px 0;font-size:15.5px;line-height:1.5;margin-top:16px}
+.callout.warn{background:#fdf0f6;border-color:var(--magenta)}
+.callout.good{background:var(--bg-teal);border-color:var(--teal)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th{background:var(--navy-darkest);color:#fff;padding:7px 10px;text-align:left;font-weight:600;font-size:13px}
+td{padding:6px 10px;border-bottom:1px solid var(--gray-100)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.hl td{background:#fbf6e9;font-weight:600}
+.pos{color:var(--teal);font-weight:600}.neg{color:var(--magenta);font-weight:600}
+.bar{height:15px;background:var(--navy);border-radius:2px;display:inline-block;vertical-align:middle}
+.bar.gold{background:var(--gold)} .bar.neg{background:var(--magenta)}
+.foot{position:absolute;left:84px;right:84px;bottom:26px;display:flex;justify-content:space-between;
+      font-size:12px;color:var(--gray-500)}
+.nav{position:fixed;right:18px;bottom:14px;font-size:13px;color:var(--gray-500);z-index:5}
+a{color:var(--navy)}
+.links{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;font-size:15px}
+.kpis{display:flex;gap:22px;margin:26px 0 6px}
+.kpi{background:var(--gray-100);border-radius:10px;padding:16px 22px;min-width:150px}
+.kpi .v{font-family:"Source Serif 4",serif;font-size:34px;font-weight:700;color:var(--navy)}
+.kpi .l{font-size:12.5px;color:var(--gray-500);margin-top:4px;line-height:1.35}
+.eq{font-family:Menlo,monospace;background:var(--gray-100);padding:12px 18px;border-radius:8px;font-size:17px;margin:14px 0}
+.small{font-size:13px;color:var(--gray-500);line-height:1.45}
+</style>
+</head>
+<body>
+<div class="stage"><div class="deck" id="deck"></div></div>
+<div class="nav" id="nav"></div>
+<script>
+const DATA = {"review":{"n_shops":17,"n_papers":19,"n_factors":20,"n_families":7,"families":["Historical-average extrapolation (incl. survey)","Zero-real / Golden-Constant anchor","Real-rate + USD factor model","Monetary / M2-debasement","Trend + mean-reversion to fair value (regime-switching)","Official-sector / de-dollarization demand","Supply-demand & portfolio / wealth-share equilibrium"]},"street":[{"shop":"Research Affiliates","num":"~0% real"},{"shop":"AQR","num":"1.4% real"},{"shop":"State Street","num":"2.5%"},{"shop":"JPM","num":"5.5%"},{"shop":"Amundi","num":"6%"},{"shop":"Mercer","num":"3.4%"},{"shop":"Meketa","num":"~0% real"},{"shop":"Aon","num":"~0% real"},{"shop":"Wilshire","num":"7%"},{"shop":"Remaco","num":"1%"}],"table1":{"simple":{"real10":-6.53,"dxy":-0.723,"be10":0.88,"adj_r2":0.262,"alpha_ann":10.4,"n":281},"soph":{"real10":-9.68,"dxy":-0.771,"be10":1.7,"move":0.678,"regX":6.89,"regX_p":0.004,"adj_r2":0.318,"alpha_ann":9.9,"n":281},"share_highinf":0.139,"net_real10_highinf":-2.79},"oos":{"daily":{"oos_r2":0.083,"dm_p":0.0,"wf_core_pct":65.8},"weekly":{"oos_r2":0.255,"dm_p":0.0002,"wf_core_pct":63.8},"monthly":{"oos_r2":0.154,"dm_p":0.0332,"wf_core_pct":68.8},"quarterly":{"oos_r2":0.101,"dm_p":0.6132,"wf_core_pct":43.8}},"sens_inflation":[{"threshold_pct":3.0,"n_months":353,"share_of_sample":0.529,"gold_real_ann":0.0506,"eq_real_ann":0.0262,"bond_real_ann":0.0186},{"threshold_pct":4.0,"n_months":220,"share_of_sample":0.33,"gold_real_ann":0.0398,"eq_real_ann":-0.0215,"bond_real_ann":-0.006},{"threshold_pct":5.0,"n_months":152,"share_of_sample":0.228,"gold_real_ann":0.0265,"eq_real_ann":-0.0266,"bond_real_ann":-0.0332},{"threshold_pct":6.0,"n_months":120,"share_of_sample":0.18,"gold_real_ann":0.0102,"eq_real_ann":-0.0514,"bond_real_ann":-0.0655},{"threshold_pct":8.0,"n_months":70,"share_of_sample":0.105,"gold_real_ann":0.0722,"eq_real_ann":-0.105,"bond_real_ann":-0.1167}],"sens_drawdown":[{"threshold_pct":10,"n_episodes":12,"gold_mean":0.196,"gold_median":0.052,"gold_pos_share":0.75,"eq_mean_dd":-0.223},{"threshold_pct":15,"n_episodes":6,"gold_mean":0.365,"gold_median":0.111,"gold_pos_share":0.67,"eq_mean_dd":-0.323},{"threshold_pct":20,"n_episodes":4,"gold_mean":0.576,"gold_median":0.207,"gold_pos_share":1.0,"eq_mean_dd":-0.389},{"threshold_pct":25,"n_episodes":4,"gold_mean":0.576,"gold_median":0.207,"gold_pos_share":1.0,"eq_mean_dd":-0.389}],"corr":{"gold_eq":0.02,"gold_bond":0.082},"p6040":{"full_base":{"cagr":0.0946,"real_cagr":0.0531,"vol":0.0824,"sharpe":0.603,"maxdd":-0.27,"worst12m":-0.235,"dd_2008":-0.247,"dd_2022":-0.186},"full_g10":{"cagr":0.0959,"real_cagr":0.0544,"vol":0.0773,"sharpe":0.653,"maxdd":-0.233,"worst12m":-0.212,"dd_2008":-0.208,"dd_2022":-0.178},"mod_base":{"cagr":0.0866,"real_cagr":0.0582,"vol":0.0752,"sharpe":0.785,"maxdd":-0.27,"worst12m":-0.235,"dd_2008":-0.247,"dd_2022":-0.186},"mod_g10":{"cagr":0.0858,"real_cagr":0.0574,"vol":0.0701,"sharpe":0.826,"maxdd":-0.233,"worst12m":-0.212,"dd_2008":-0.208,"dd_2022":-0.178},"mod_fund_bond":{"cagr":0.089,"real_cagr":0.0606,"vol":0.0761,"sharpe":0.806,"maxdd":-0.272,"worst12m":-0.241,"dd_2008":-0.246,"dd_2022":-0.179},"mod_fund_eq":{"cagr":0.0835,"real_cagr":0.0553,"vol":0.0663,"sharpe":0.838,"maxdd":-0.209,"worst12m":-0.192,"dd_2008":-0.183,"dd_2022":-0.177}},"sleeve":{"gold":{"sharpe":0.91,"base_sharpe":0.815,"corr_eq":0.037,"infl2123":-0.024,"dd2022":-0.107,"gfc":0.154},"tips":{"sharpe":0.821,"base_sharpe":0.815,"corr_eq":0.152,"infl2123":-0.167,"dd2022":-0.12,"gfc":0.084},"commod":{"sharpe":0.751,"base_sharpe":0.815,"corr_eq":0.399,"infl2123":0.194,"dd2022":0.209,"gfc":-0.317}},"war":{"Yom Kippur + embargo":0.474,"Iran hostage/Afghanistan":0.647,"Kuwait invasion":-0.025,"9/11":0.14,"Iraq invasion":0.132,"Crimea":0.032,"Ukraine invasion":0.073,"Oct 7 Israel":0.425},"regimes":{"hyperglobalization_1990_2016":{"gold_cagr":0.0397,"eq_cagr":0.0941,"gold_eq_corr":-0.016,"gold_vol":0.1568},"fragmentation_2017_on":{"gold_cagr":0.1487,"eq_cagr":0.1456,"gold_eq_corr":-0.002,"gold_vol":0.1345}},"drawdowns":[{"peak":"1973-02","trough":"1974-12","eq_dd":-0.392,"gold":1.822,"bond":0.071},{"peak":"1987-09","trough":"1987-12","eq_dd":-0.26,"gold":0.068,"bond":0.015},{"peak":"2000-09","trough":"2003-02","eq_dd":-0.416,"gold":0.259,"bond":0.311},{"peak":"2007-11","trough":"2009-03","eq_dd":-0.49,"gold":0.154,"bond":0.209},{"peak":"2020-03","trough":"2020-03","eq_dd":-0.189,"gold":-0.005,"bond":0.061},{"peak":"2022-01","trough":"2022-10","eq_dd":-0.193,"gold":-0.107,"bond":-0.179}],"inflation_eps":{"1973-75 (oil shock)":{"cpi":0.306,"gold_real":0.68,"eq_real":-0.35,"bond_real":-0.148},"1977-82 (second wave)":{"cpi":0.677,"gold_real":1.026,"eq_real":0.077,"bond_real":-0.125},"2021-23 (post-COVID)":{"cpi":0.152,"gold_real":-0.024,"eq_real":-0.002,"bond_real":-0.238}},"btc":{"pool_T":23,"supply_M":19.9,"spot":107754,"scen":[{"lab":"Bear","share":3,"price":34673,"cagr":-5.51},{"lab":"Base","share":15,"price":173367,"cagr":2.41},{"lab":"Bull","share":60,"price":693467,"cagr":9.76}]},"links":{"map":"https://jhdavis789.github.io/work-doc-portal/gold-cma-map/cma_map.html","holders_returns":"https://jhdavis789.github.io/gold-holders-dashboard/?tab=returns&horizon=20&basis=real&from=1901&to=2025","portal":"https://jhdavis789.github.io/work-doc-portal/"}};
+
+const pct = (x, d=1) => (x*100).toFixed(d) + "%";
+const sgn = x => (x >= 0 ? "+" : "") + x;
+
+function streetRows(){
+  const order = ["Research Affiliates","Aon","Meketa","AQR","Remaco","State Street","Mercer","Amundi","JPM","Wilshire"];
+  const by = Object.fromEntries(DATA.street.map(s=>[s.shop,s.num]));
+  return order.filter(s=>by[s]).map(s=>`<tr><td>${s}</td><td class="num">${by[s]}</td></tr>`).join("");
+}
+
+const SLIDES = [
+// 1 — cover
+() => `
+  <div style="margin-top:120px">
+  <div class="eyebrow">Gold &amp; Bitcoin capital-market assumptions · July 2026</div>
+  <h1>Gold and Bitcoin CMAs: what the literature does, why we chose returns space and a gold tether, and what the evidence shows</h1>
+  <div class="sub">Ten slides: the review of ${DATA.review.n_papers} academic papers and ${DATA.review.n_shops} industry shops, the model selection, the two-model regression with out-of-sample tests, the Bitcoin share framework, and gold's role in a multi-asset portfolio.</div>
+  <div class="links">
+    <a href="${DATA.links.map}" target="_blank">Interactive map: papers &amp; shops → factors → approaches</a>
+    <a href="${DATA.links.holders_returns}" target="_blank">Rolling-returns explorer (20y real, 1901–2025)</a>
+    <a href="${DATA.links.portal}" target="_blank">All deliverables (work portal)</a>
+  </div>
+  <div style="margin-top:56px;font-size:14px;color:var(--gray-500)">By JAOD &amp; (mainly) Claude · every number scripted and reproducible</div>
+  </div>`,
+
+// 2 — literature
+() => `
+  <div class="eyebrow">The review</div>
+  <h1>${DATA.review.n_papers} academic papers and ${DATA.review.n_shops} industry shops collapse into seven approach families and twenty price factors</h1>
+  <div class="body"><div class="col">
+    <ul>
+      <li><b>Seven MECE families:</b> ${DATA.review.families.join(" · ")}.</li>
+      <li>The academic weight sits on the <b>real-rate + USD factor model</b> (the best in-regime fit: R² ≈ 0.65, real duration 14–18y) and on the <b>official-sector / de-dollarization channel</b>.</li>
+      <li>The industry weight sits on <b>historical averages and mean-reversion to fair value</b> — the two families most exposed to the post-2022 break.</li>
+      <li>Every source is wired to its factors and approaches in the <a href="${DATA.links.map}" target="_blank">interactive driver map</a> (hover any node to trace its links).</li>
+    </ul>
+    <div class="callout">The map's clearest pattern: the official-sector column lights up almost entirely from the academic side. The street barely models the buyer that actually moved gold after 2022.</div>
+  </div>
+  <div class="col" style="max-width:420px">
+    <div class="kpis" style="flex-direction:column;gap:14px;margin:0">
+      <div class="kpi"><div class="v">${DATA.review.n_papers} + ${DATA.review.n_shops}</div><div class="l">academic papers + industry shops reviewed source-by-source</div></div>
+      <div class="kpi"><div class="v">${DATA.review.n_factors}</div><div class="l">price factors mapped (real rates, USD, MOVE, swaps, CB demand, …)</div></div>
+      <div class="kpi"><div class="v">${DATA.review.n_families}</div><div class="l">mutually exclusive approach families the methods collapse into</div></div>
+    </div>
+  </div></div>`,
+
+// 3 — street numbers
+() => `
+  <div class="eyebrow">The street</div>
+  <h1>Published gold CMAs run from ~0% real to 7% nominal with no consensus model, and almost none model the post-2022 official-sector buyer</h1>
+  <div class="body"><div class="col" style="max-width:520px">
+    <table><tr><th>Shop</th><th style="text-align:right">Published long-run gold return</th></tr>${streetRows()}</table>
+    <div class="small" style="margin-top:10px">Nominal unless marked real. Source: each shop's latest published CMA (full table and citations in the review).</div>
+  </div>
+  <div class="col">
+    <ul>
+      <li>The <b>dispersion is the tell</b>: zero-real anchors (Research Affiliates, Aon, Meketa), historical averages (AQR 1.4% real), fair-value mean reversion (Mercer 3.4%, Amundi 6%), risk-factor builds (JPM 5.5%), and an M2 rule (Wilshire 7%).</li>
+      <li>Most shops fold gold into a <b>broad-commodity bucket</b> rather than model it directly.</li>
+      <li>Where a shop does model gold, it reaches for the <b>same factors our regression keeps</b>: the real rate, the dollar, and occasionally rate volatility and central-bank demand.</li>
+      <li>Central banks bought 1,000+ tonnes for a third straight year; the dollar's reserve share fell 71% → 59% (1999–2021). <b>That buyer is the gap this work closes.</b></li>
+    </ul>
+  </div></div>`,
+
+// 4 — why returns space
+() => `
+  <div class="eyebrow">Model selection — gold</div>
+  <h1>We model gold in returns space because the fair-value level anchor broke in 2022 and now permanently reads gold as 40–50% rich</h1>
+  <div class="body"><div class="col">
+    <ul>
+      <li>A levels model anchors price to the real rate. <b>Real yields rose after 2022 and gold roughly doubled anyway</b> — the model's residual is not noise, it is the official-sector regime change.</li>
+      <li>A levels spine forces that broken component to contaminate the stable ones. <b>Returns space quarantines it</b>: the dollar and real-rate sensitivities stay stable across regimes, and the structural bid moves into an explicit drift term we can reason about separately.</li>
+      <li>Each rejected family still contributes a part: the Golden Constant becomes the <b>+1.0–1.3% real floor</b> on the drift; regime-switching becomes a <b>targeted high-inflation interaction</b>; official-sector demand becomes <b>the residual itself</b>; wealth-share pool sizing is what Bitcoin later borrows.</li>
+    </ul>
+    <div class="callout good">One criterion did the selecting: a 20-year horizon. It is long enough to break every fitted level and expose every reflexive metric — only a mechanism-driven returns model survives it.</div>
+  </div></div>`,
+
+// 5 — the two models
+() => { const t=DATA.table1; return `
+  <div class="eyebrow">The regression</div>
+  <h1>Two models to carry: a simple model built from existing CMA inputs, and a sophisticated model adding rate volatility and a high-inflation interaction</h1>
+  <div class="body"><div class="col" style="max-width:640px">
+    <table>
+      <tr><th>Monthly gold return on…</th><th style="text-align:right">Simple</th><th style="text-align:right">Sophisticated</th></tr>
+      <tr><td>Δ Real 10y (per +1pp)</td><td class="num">${t.simple.real10}***</td><td class="num">${t.soph.real10}***</td></tr>
+      <tr><td>DXY return (per +1%)</td><td class="num">${t.simple.dxy}***</td><td class="num">${t.soph.dxy}***</td></tr>
+      <tr><td>Δ 10Y breakeven (per +1pp)</td><td class="num">${t.simple.be10}</td><td class="num">${t.soph.be10}</td></tr>
+      <tr><td>Δ MOVE (per +10bp)</td><td class="num">—</td><td class="num">+${t.soph.move}***</td></tr>
+      <tr class="hl"><td>Δ Real 10y × high-CPI regime</td><td class="num">—</td><td class="num">+${t.soph.regX}*** (p=${t.soph.regX_p})</td></tr>
+      <tr><td>Adjusted R²</td><td class="num">${t.simple.adj_r2}</td><td class="num">${t.soph.adj_r2}</td></tr>
+      <tr><td>Intercept (%/yr)</td><td class="num">${t.simple.alpha_ann}</td><td class="num">${t.soph.alpha_ann}</td></tr>
+      <tr><td>N (months, 2003–2026)</td><td class="num">${t.simple.n}</td><td class="num">${t.soph.n}</td></tr>
+    </table>
+    <div class="small" style="margin-top:8px">FRED panel; Newey-West HAC. *** = p&lt;0.01. Full table ladder, diagnostics and swap variants in the paper and the live Excel.</div>
+  </div>
+  <div class="col">
+    <ul>
+      <li><b>The simple model runs off inputs the CMA process already owns</b> (real rate, dollar, inflation expectations) — nothing new to forecast.</li>
+      <li><b>The regime finding:</b> in months with CPI above 4% (${pct(t.share_highinf,1)} of the sample) the real-rate beta collapses from ${t.soph.real10} to ≈${t.net_real10_highinf}. Gold stops trading like a real bond exactly when inflation is out of control.</li>
+      <li>On Bloomberg data the interaction's t-stat is threshold-sensitive (significant at 2.5% and 5% cuts, weaker between) — <b>the economics are stable, the point estimate is not</b>; a smooth above-target spec is the defensible production choice.</li>
+      <li>The 2Y inflation swap beats the 10Y breakeven as the inflation leg (weekly HAC t +2.3 vs +0.5) at the cost of a 2004 start.</li>
+    </ul>
+  </div></div>`},
+
+// 6 — OOS
+() => { const o=DATA.oos; const row=(f,l)=>`<tr><td>${l}</td><td class="num">${pct(o[f].oos_r2)}</td><td class="num">${o[f].dm_p}</td><td class="num">${o[f].wf_core_pct}%</td></tr>`; return `
+  <div class="eyebrow">Robustness</div>
+  <h1>Out of sample the model beats a random walk at daily, weekly and monthly frequency; walk-forward selection keeps choosing the real-rate and dollar core</h1>
+  <div class="body"><div class="col" style="max-width:640px">
+    <table>
+      <tr><th>Frequency</th><th style="text-align:right">OOS R² vs RW(0)</th><th style="text-align:right">Diebold-Mariano p</th><th style="text-align:right">% windows picking {real10, DXY}</th></tr>
+      ${row("daily","Daily")}${row("weekly","Weekly")}${row("monthly","Monthly")}${row("quarterly","Quarterly")}
+    </table>
+    <div class="small" style="margin-top:8px">Rolling five-year re-fit, predicting the next period given contemporaneous factor moves; walk-forward re-selects the best 3-factor subset with zero look-ahead.</div>
+  </div>
+  <div class="col">
+    <ul>
+      <li><b>In-sample is the anchor</b> (it establishes which variables matter); out-of-sample and rolling estimates are the robustness check, not the headline.</li>
+      <li>Quarterly is insignificant on 73 OOS quarters — too few observations, not a model failure.</li>
+      <li>Lagging the factors kills the fit: this is a <b>risk-and-transfer decomposition, not a market-timing rule</b>. The allocator forecasts the factors; the model translates them into gold.</li>
+      <li>Adding breadth (oil, VIX, S&amp;P, Agg) buys in-sample R² and gives it back out of sample — only MOVE and the regime term survive a holdout.</li>
+    </ul>
+  </div></div>`},
+
+// 7 — the drift
+() => `
+  <div class="eyebrow">The intercept</div>
+  <h1>The factors explain gold's comovement, not its drift: a persistent ~10–12%/yr intercept is the official-sector bid, and the CMA drift is an explicit choice</h1>
+  <div class="body"><div class="col">
+    <ul>
+      <li>Decomposing gold's growth of $1: the <b>factor part explains the wiggles</b>; the <b>intercept-plus-residual part is a persistent positive drift that steepens after 2022</b> (charted on every tab of the live Excel).</li>
+      <li>We do <b>not</b> extrapolate the sample intercept — that would carry a specific window of central-bank buying forward as a constant.</li>
+      <li>The drift is anchored between two named reference points: the centuries-long <b>Golden Constant floor (+1.0–1.3% real)</b> and the post-2022 official-sector bid the intercept measures — the centre is a stated structural choice, bounded by priors.</li>
+      <li>Money-supply growth is no help in timing it: gold-vs-M0/M1/M2 YoY correlations are ≈0 at every horizon; gold/M0 sits at its 50th historical percentile. <b>Debasement works over 55 years and is useless as a signal.</b></li>
+    </ul>
+    <div class="callout">What would change the number: central banks turning net sellers, the dollar reserve share stabilizing, or the dollar/real-rate betas destabilizing in the rolling windows. All three are watchable.</div>
+  </div></div>`,
+
+// 8 — BTC
+() => { const b=DATA.btc; return `
+  <div class="eyebrow">Model selection — Bitcoin</div>
+  <h1>Bitcoin gets no factor model: it is priced as a probability-weighted share of gold's monetary market cap with an explicit survival term</h1>
+  <div class="body"><div class="col">
+    <div class="eq">V<sub>BTC</sub> = S × M<sub>gold</sub> × P(survival)&nbsp;&nbsp;→&nbsp;&nbsp;P<sub>BTC</sub> = V<sub>BTC</sub> / coins</div>
+    <ul>
+      <li>On realized data Bitcoin is <b>speculative and equity-correlated</b> (gold correlation ≈ 0, equity correlation positive and rising) — a gold-style regression is the wrong frame.</li>
+      <li>Every alternative fails at 20 years: on-chain metrics take price as an input, stock-to-flow is a spurious regression, options recover weeks-horizon objects, and <b>flow-multiplier models price the plumbing, not the water</b> — in an efficient market a repricing needs zero net inflow.</li>
+      <li>The share equation reduces everything unknowable to <b>one named parameter S</b>, disciplined by the gold CMA's own pool.</li>
+    </ul>
+    <div class="small" style="margin-top:8px">Assumes the ~$${b.pool_T}T monetary/investment gold pool and ${b.supply_M}M coins; spot $${(b.spot/1000).toFixed(0)}k.</div>
+  </div>
+  <div class="col" style="max-width:460px">
+    <table>
+      <tr><th>Scenario</th><th style="text-align:right">Share of gold pool</th><th style="text-align:right">Implied price</th><th style="text-align:right">20y CAGR</th></tr>
+      ${b.scen.map(s=>`<tr${s.lab==="Base"?' class="hl"':''}><td>${s.lab}</td><td class="num">${s.share}%</td><td class="num">$${Math.round(s.price/1000)}k</td><td class="num">${sgn(s.cagr)}%</td></tr>`).join("")}
+    </table>
+    <div class="callout warn" style="margin-top:14px">The deliverable is the range and the implied share — blended against a non-trivial ruin branch — not a point CAGR dressed as precision.</div>
+  </div></div>`},
+
+// 9 — extremes
+() => { const t1=DATA.sens_inflation, t2=DATA.sens_drawdown; return `
+  <div class="eyebrow">Portfolio role — the extremes</div>
+  <h1>Gold's protection is concentrated in the extremes: positive real returns at every inflation threshold, and gains in all four equity bears deeper than 20%</h1>
+  <div class="body"><div class="col">
+    <table>
+      <tr><th>CPI YoY cutoff</th><th style="text-align:right">n months</th><th style="text-align:right">Gold real/yr</th><th style="text-align:right">Equities</th><th style="text-align:right">Bonds</th></tr>
+      ${t1.map(r=>`<tr><td>&gt;${r.threshold_pct}%</td><td class="num">${r.n_months}</td><td class="num pos">${sgn((r.gold_real_ann*100).toFixed(1))}%</td><td class="num ${r.eq_real_ann<0?'neg':''}">${sgn((r.eq_real_ann*100).toFixed(1))}%</td><td class="num ${r.bond_real_ann<0?'neg':''}">${sgn((r.bond_real_ann*100).toFixed(1))}%</td></tr>`).join("")}
+    </table>
+    <div class="small" style="margin-top:8px">Monthly 1970–2025, in-regime real annualized returns. Gold is the only major asset positive at every cutoff.</div>
+  </div>
+  <div class="col">
+    <table>
+      <tr><th>Equity DD cutoff</th><th style="text-align:right">n episodes</th><th style="text-align:right">Gold mean</th><th style="text-align:right">Gold median</th><th style="text-align:right">Gold positive</th></tr>
+      ${t2.map(r=>`<tr><td>&gt;${r.threshold_pct}%</td><td class="num">${r.n_episodes}</td><td class="num pos">${sgn((r.gold_mean*100).toFixed(1))}%</td><td class="num">${sgn((r.gold_median*100).toFixed(1))}%</td><td class="num">${pct(r.gold_pos_share,0)}</td></tr>`).join("")}
+    </table>
+    <div class="callout warn" style="margin-top:12px">The one failure mode is a real-rate-shock drawdown (2022: gold −11% inside the equity bear) — consistent with the regression: the real rate is gold's transmission channel.</div>
+    <div class="small" style="margin-top:10px">War/geopolitical shocks pay when they threaten the monetary order: +47% (1973 embargo), +65% (Iran/Afghanistan), +43% (Oct-7) over 12m — vs −3% for Kuwait. Day-to-day, gold is a zero-correlation diversifier (${DATA.corr.gold_eq} to equities).</div>
+  </div></div>`},
+
+// 10 — portfolio construction
+() => { const p=DATA.p6040, s=DATA.sleeve; const f=(x,d=1)=>(x*100).toFixed(d)+"%"; return `
+  <div class="eyebrow">Portfolio construction</div>
+  <h1>A 5–10% gold sleeve funded from bonds improved 60/40 outcomes, and gold beat TIPS and commodities for the same sleeve on a matched sample</h1>
+  <div class="body"><div class="col">
+    <table>
+      <tr><th>60/40, monthly rebalanced</th><th style="text-align:right">CAGR</th><th style="text-align:right">Vol</th><th style="text-align:right">Sharpe</th><th style="text-align:right">Max DD</th></tr>
+      <tr><td>1970–2025 base</td><td class="num">${f(p.full_base.cagr)}</td><td class="num">${f(p.full_base.vol)}</td><td class="num">${p.full_base.sharpe}</td><td class="num">${f(p.full_base.maxdd,0)}</td></tr>
+      <tr class="hl"><td>1970–2025 + 10% gold</td><td class="num">${f(p.full_g10.cagr)}</td><td class="num">${f(p.full_g10.vol)}</td><td class="num">${p.full_g10.sharpe}</td><td class="num">${f(p.full_g10.maxdd,0)}</td></tr>
+      <tr><td>1990–2025 base</td><td class="num">${f(p.mod_base.cagr)}</td><td class="num">${f(p.mod_base.vol)}</td><td class="num">${p.mod_base.sharpe}</td><td class="num">${f(p.mod_base.maxdd,0)}</td></tr>
+      <tr class="hl"><td>1990–2025 + 10% gold</td><td class="num">${f(p.mod_g10.cagr)}</td><td class="num">${f(p.mod_g10.vol)}</td><td class="num">${p.mod_g10.sharpe}</td><td class="num">${f(p.mod_g10.maxdd,0)}</td></tr>
+      <tr><td>… funded from bonds</td><td class="num">${f(p.mod_fund_bond.cagr)}</td><td class="num">${f(p.mod_fund_bond.vol)}</td><td class="num">${p.mod_fund_bond.sharpe}</td><td class="num">${f(p.mod_fund_bond.maxdd,0)}</td></tr>
+      <tr><td>… funded from equities</td><td class="num">${f(p.mod_fund_eq.cagr)}</td><td class="num">${f(p.mod_fund_eq.vol)}</td><td class="num">${p.mod_fund_eq.sharpe}</td><td class="num">${f(p.mod_fund_eq.maxdd,0)}</td></tr>
+    </table>
+  </div>
+  <div class="col">
+    <table>
+      <tr><th>Sleeve (2004–25, +10% to 60/40)</th><th style="text-align:right">Sharpe</th><th style="text-align:right">Corr to eq</th><th style="text-align:right">2021–23 real</th><th style="text-align:right">2022</th></tr>
+      <tr class="hl"><td>Gold</td><td class="num">${s.gold.sharpe}</td><td class="num">${s.gold.corr_eq}</td><td class="num">${f(s.gold.infl2123)}</td><td class="num">${f(s.gold.dd2022)}</td></tr>
+      <tr><td>TIPS (TIP)</td><td class="num">${s.tips.sharpe}</td><td class="num">${s.tips.corr_eq}</td><td class="num neg">${f(s.tips.infl2123)}</td><td class="num">${f(s.tips.dd2022)}</td></tr>
+      <tr><td>Commodities (BCOM/DBC)</td><td class="num">${s.commod.sharpe}</td><td class="num">${s.commod.corr_eq}</td><td class="num pos">${f(s.commod.infl2123)}</td><td class="num pos">${f(s.commod.dd2022)}</td></tr>
+    </table>
+    <div class="small" style="margin-top:8px">Base 60/40 Sharpe on the same sample: ${s.gold.base_sharpe}. TIPS lost 16.7% real over 2021–23 (duration swamped accrual); commodities won 2022 but carry 0.40 equity correlation.</div>
+    <div class="callout good" style="margin-top:12px">Target-date framing: gold's episode protection has beaten Treasuries' since 2000 and hedges the state that ruins bonds — the case strengthens in bond-heavy later vintages. Next: firm factor paths + drift choice to print the CMA number.</div>
+  </div></div>`},
+];
+
+const TITLES = ["Cover","Review","Street","Returns space","Two models","Out of sample","The drift","Bitcoin","Extremes","Portfolio"];
+const deck = document.getElementById("deck");
+SLIDES.forEach((fn, i) => {
+  const s = document.createElement("div");
+  s.className = i === 0 ? "slide active cover" : "slide";
+  s.innerHTML = fn(i) + `<div class="foot"><span>Gold &amp; Bitcoin CMA — evidence deck · By JAOD &amp; (mainly) Claude</span><span>${i+1} / ${SLIDES.length}</span></div>`;
+  deck.appendChild(s);
+});
+let cur = 0;
+const nodes = [...deck.querySelectorAll(".slide")];
+function show(i){
+  cur = Math.max(0, Math.min(SLIDES.length - 1, i));
+  nodes.forEach((n, j) => n.classList.toggle("active", j === cur));
+  if (W.location) W.location.hash = "#" + (cur + 1);
+  document.getElementById("nav").textContent = `${TITLES[cur]} — ${cur+1}/${SLIDES.length} · ←/→`;
+}
+// interaction wiring is guarded so a headless validator (no window APIs) still
+// executes the full render above; browsers get the real behavior
+const W = (typeof window !== "undefined") ? window : {};
+const on = (t, f) => { if (typeof W.addEventListener === "function") W.addEventListener(t, f); };
+on("keydown", e => {
+  if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") show(cur + 1);
+  if (e.key === "ArrowLeft" || e.key === "PageUp") show(cur - 1);
+});
+if (typeof deck.addEventListener === "function")
+  deck.addEventListener("click", e => { if (!e.target.closest("a")) show(cur + 1); });
+function fitDeck(){
+  const m = 24;
+  const iw = W.innerWidth || 1440, ih = W.innerHeight || 900;
+  const s = Math.min((iw - m*2) / 1440, (ih - m*2) / 900, 1);
+  deck.style.transform = `scale(${s})`;
+}
+on("resize", fitDeck);
+fitDeck();
+show(((W.location && parseInt(W.location.hash.slice(1))) || 1) - 1);
+</script>
+</body>
+</html>
