@@ -5,7 +5,8 @@
   "date": "2026-07-02",
   "kind": "One-pager",
   "pinned": true,
-  "desc": "Open design question for review: a trade-weighted dollar represents neither the marginal buyer/seller of gold nor the average holder. Seven USD measures raced on monthly gold returns 1990-2026: the Fed float-weighted major index encompasses DXY; demand-weighted baskets (CNY/INR/TRY) fail mechanically because managed currencies carry weight but no return variance; the 2022+ central-bank era is the one window where the buyer basket leads (monitored, not adopted). Holder-weighted variant in testing."
+  "desc": "Open design question for review: a trade-weighted dollar represents neither the marginal buyer/seller of gold nor the average holder. Nine USD measures raced on monthly gold returns 1990-2026: the Fed float-weighted major index encompasses DXY; demand-weighted baskets fail mechanically (managed currencies carry weight, no return variance); the official-holder basket is Euro-heavy and adds nothing. The Asia-weighted private-holder basket (INR 31/CNY 30 ~ the marginal buyer) is the best single measure since 2022 (R-sq .304) and clears |t|>2 in that window only - a monitored regime signal, not yet a durable trend (10y rolling t = -1.9).",
+  "version": "v2"
  },
  {
   "title": "Gold through every major drawdown — S&P, small-cap, 60/40, and Treasury bears (chartpack)",
