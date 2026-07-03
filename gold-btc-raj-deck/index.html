@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bitcoin &amp; Gold CMAs — follow-up deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-darkest:#00294b; --navy:#005f9e; --teal:#007e6c; --teal-light:#75d9d7;
+  --magenta:#a6256e; --warm:#ebe0da; --bg-blue:#def5ff; --bg-teal:#ddf6f6;
+  --gray-100:#f1f1f1; --gray-500:#6b7f8a; --gold:#c9a227;
+}
+*{box-sizing:border-box;margin:0}
+body{background:#eef0f3;font-family:Inter,system-ui,sans-serif;color:var(--navy-darkest)}
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.deck{position:relative;width:1440px;height:900px;background:#fff;
+      box-shadow:0 8px 40px rgba(0,41,75,.18);overflow:hidden;transform-origin:center center;flex-shrink:0}
+.slide{position:absolute;inset:0;padding:64px 84px 88px;opacity:0;pointer-events:none;
+       transition:opacity .25s ease;display:flex;flex-direction:column}
+.slide.active{opacity:1;pointer-events:auto}
+.eyebrow{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--navy);font-weight:600;margin-bottom:10px}
+h1{font-family:"Source Serif 4",Georgia,serif;font-size:34px;line-height:1.22;font-weight:700;margin-bottom:26px;max-width:1220px}
+.cover h1{font-size:52px;line-height:1.15;margin:24px 0 18px}
+.sub{font-size:17px;color:var(--gray-500);max-width:980px;line-height:1.5}
+.body{flex:1;display:flex;gap:36px;min-height:0}
+.col{flex:1;min-width:0}
+p,li{font-size:16.5px;line-height:1.52}
+ul{padding-left:20px;display:flex;flex-direction:column;gap:10px}
+b{color:var(--navy-darkest)}
+.callout{background:var(--bg-blue);border-left:4px solid var(--navy);padding:14px 18px;border-radius:0 8px 8px 0;font-size:15.5px;line-height:1.5;margin-top:16px}
+.callout.warn{background:#fdf0f6;border-color:var(--magenta)}
+.callout.good{background:var(--bg-teal);border-color:var(--teal)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th{background:var(--navy-darkest);color:#fff;padding:7px 10px;text-align:left;font-weight:600;font-size:13px}
+td{padding:6px 10px;border-bottom:1px solid var(--gray-100)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.hl td{background:#fbf6e9;font-weight:600}
+.pos{color:var(--teal);font-weight:600}.neg{color:var(--magenta);font-weight:600}
+.bar{height:15px;background:var(--navy);border-radius:2px;display:inline-block;vertical-align:middle}
+.bar.gold{background:var(--gold)} .bar.neg{background:var(--magenta)}
+.foot{position:absolute;left:84px;right:84px;bottom:26px;display:flex;justify-content:space-between;
+      font-size:12px;color:var(--gray-500)}
+.nav{position:fixed;right:18px;bottom:14px;font-size:13px;color:var(--gray-500);z-index:5}
+a{color:var(--navy)}
+.links{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;font-size:15px}
+.kpis{display:flex;gap:22px;margin:26px 0 6px}
+.kpi{background:var(--gray-100);border-radius:10px;padding:16px 22px;min-width:150px}
+.kpi .v{font-family:"Source Serif 4",serif;font-size:34px;font-weight:700;color:var(--navy)}
+.kpi .l{font-size:12.5px;color:var(--gray-500);margin-top:4px;line-height:1.35}
+.eq{font-family:Menlo,monospace;background:var(--gray-100);padding:12px 18px;border-radius:8px;font-size:17px;margin:14px 0}
+.small{font-size:13px;color:var(--gray-500);line-height:1.45}
+
+.best{background:#fbf6e9;font-weight:700}
+.imgbox{flex:1.35;display:flex;align-items:center;justify-content:center;min-width:0}
+.imgbox img{max-width:100%;max-height:100%;object-fit:contain}
+.imgrow{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+.imgrow img{max-width:100%;max-height:100%;object-fit:contain}
+.outline td.pt{font-weight:600;color:var(--navy-darkest)}
+.subtl{font-size:15px;color:var(--gray-500);margin:-16px 0 14px;line-height:1.4}
+</style></head>
+<body><div class="stage"><div class="deck" id="deck"><section class="slide cover"><div style="margin-top:120px">
+<div class="eyebrow">Bitcoin &amp; Gold capital-market assumptions · follow-up detail · July 2026</div>
+<h1>Bitcoin and Gold CMAs: the work behind the update</h1>
+<div class="sub">One section per point of the update email. Direct data throughout; every dashboard shown carries its link.
+Asks: feedback on the gold model, feedback on the Bitcoin approach, review of the two one-pagers.</div>
+<div class="links"><a href="https://jhdavis789.github.io/work-doc-portal/" target="_blank">All materials (portal)</a><a href="https://jhdavis789.github.io/work-doc-portal/gold-cma-map/cma_map.html" target="_blank">Papers &amp; shops map</a><a href="https://jhdavis789.github.io/work-doc-portal/gold-factor-regression/dashboard.html" target="_blank">Model dashboard</a></div>
+<div class="foot"><span>All numbers scripted and reproducible</span><span>JAOD · July 2026</span></div></div></section><section class="slide"><div class="eyebrow">Outline</div><h1>The update email, point by point</h1><div class="body"><div class="col"><table class="outline">
+<tr><th>Point from the update</th><th>Slides</th></tr>
+<tr><td class="pt">1 · Full literature reviews and a summary of the most important points</td><td class="num">4–5</td></tr>
+<tr><td class="pt">2 · Translation from the reviews into my view of the key drivers, gold and BTC</td><td class="num">6</td></tr>
+<tr><td class="pt">3 · Initial gold return models with robustness checks — simplicity, and assumptions from our existing CMAs</td><td class="num">7–8</td></tr>
+<tr><td class="pt">4 · The appreciation not captured by the model, the error term, and qualitative overlays</td><td class="num">9–10</td></tr>
+<tr><td class="pt">5 · Research opportunities to go deeper — where I would especially value your feedback</td><td class="num">11</td></tr>
+<tr><td class="pt">6 · Gold correlations and performance during drawdowns (especially left-tail)</td><td class="num">12–13</td></tr>
+<tr><td class="pt">7 · Bitcoin and the inconstancy of its relationship with various signals</td><td class="num">14–16</td></tr>
+<tr><td class="pt">Asks &amp; materials</td><td class="num">3, 17</td></tr>
+<tr><td class="pt">Appendix: other frequencies · walk-forward OOS · inflation-swap cross-check · top official holders</td><td class="num">18–21</td></tr>
+</table></div><div class="col">
+<div class="callout">Three asks. (1) The gold model: two-model presentation, the intercept treatment, the dollar leg.
+(2) The Bitcoin approach: no model is consistent — the approach must own that. (3) The two one-pagers (attached): they are the documents of record.</div>
+</div></div><div class="foot"><span>Structure mirrors the update email</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Summary</div><h1>Where the work stands</h1><div class="body"><div class="col">
+<ul>
+<li><b>Gold:</b> a returns-space model from variables already in our CMAs. Monthly R² 0.31, quarterly 0.45;
+betas stable in rolling windows; beats a random walk out of sample. The data cannot set the <b>intercept</b> — that is the judgment call, and I propose a structural growth band plus a valuation overlay.</li>
+<li><b>Bitcoin:</b> twelve candidate drivers, none stable. No model is particularly consistent. The approach sizes BTC as a share of gold's monetary role with a survival branch — the unknown is named, not hidden.</li>
+<li><b>Hedging:</b> gold's protection improves with drawdown severity, its 20-year real return is <i>higher</i> in equities' worst windows than overall, and the strongest case is bond bears.</li>
+</ul></div><div class="col">
+<div class="kpis"><div class="kpi"><div class="v">19+17</div><div class="l">papers + shops reviewed</div></div>
+<div class="kpi"><div class="v">0.31</div><div class="l">monthly in-sample R², sophisticated model</div></div></div>
+<div class="kpis"><div class="kpi"><div class="v">~6%</div><div class="l">intercept from the constant-share identity</div></div>
+<div class="kpi"><div class="v">0 of 5</div><div class="l">factors stable across BTC subsamples (gold: 2)</div></div></div>
+</div></div><div class="foot"><span>Detail follows, point by point</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 1 · Literature reviews</div><h1>Every paper and shop, mapped: factors cited → source → modeling approach</h1><div class="subtl">Static view of the interactive map — center column is every source, left links are the factors it cites, right links its approach family</div><div class="imgrow"><img src="img/cma_map.png" alt="papers and shops map"></div>
+<p class="small" style="margin-top:6px">19 academic papers + 17 industry shops; 20 price factors; 7 mutually exclusive approach families.
+Interactive version (hover to trace any source's links): <a href="https://jhdavis789.github.io/work-doc-portal/gold-cma-map/cma_map.html" target="_blank">jhdavis789.github.io/work-doc-portal/gold-cma-map/cma_map.html</a></p><div class="foot"><span>Deeper: https://jhdavis789.github.io/work-doc-portal/gold-cma-map/cma_map.html</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 1 · Literature reviews</div><h1>What the evidence establishes; what the street does with it</h1><div class="body"><div class="col">
+<ul><li><b>Real rates are the engine.</b> Gold trades like a long-duration real bond. Highest single-factor R². The fit broke after 2022.</li>
+<li><b>The dollar is the steadiest relationship</b> — and it held through 2022.</li>
+<li><b>Inflation passes through only at long horizons.</b> The 1–20y hedge evidence is weak.</li>
+<li><b>Official-sector demand broke the fixed-mean models.</b> Price-insensitive, sanctions-driven, unforecastable as a factor.</li>
+<li><b>Nothing beats a random walk on the level.</b> VAR, GARCH, ML, stock-to-flow all fail out of sample.</li></ul>
+<div class="callout">The gap: the marginal buyer that moved the price — EM central banks — is modeled by almost nobody.</div>
+</div><div class="col"><table><tr><th>Shop</th><th>Gold CMA</th></tr><tr><td>Research Affiliates</td><td class="num">~0% real</td></tr><tr><td>AQR</td><td class="num">1.4% real</td></tr><tr><td>State Street</td><td class="num">2.5%</td></tr><tr><td>JPM</td><td class="num">5.5%</td></tr><tr><td>Amundi</td><td class="num">6%</td></tr><tr><td>Mercer</td><td class="num">3.4%</td></tr><tr><td>Meketa</td><td class="num">~0% real</td></tr><tr><td>Aon</td><td class="num">~0% real</td></tr><tr><td>Wilshire</td><td class="num">7%</td></tr><tr><td>Remaco</td><td class="num">1%</td></tr></table>
+<p class="small" style="margin-top:6px">No consensus: ~0% real to ~7% nominal. Most shops have no standalone gold CMA at all.</p>
+</div></div><div class="foot"><span>Full reviews: attached one-pagers + https://jhdavis789.github.io/work-doc-portal/gold-cma-deck/index.html</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 2 · Key drivers</div><h1>Three variables carry gold; nothing carries Bitcoin</h1><div class="body"><div class="col"><p><b>Gold — survived testing:</b></p>
+<ul><li><b>Real 10y (TIPS)</b> — the engine; β ≈ -8.292 %/pp monthly.</li>
+<li><b>Dollar</b> — one floating DM leg (slide 11 for which one).</li>
+<li><b>Breakevens / inflation swaps</b> — the forward inflation leg. Realized CPI adds nothing.</li>
+<li><b>MOVE</b> — rate-vol insurance bid, second-order.</li>
+<li><b>High-CPI regime × real rate</b> — the sensitivity is state-dependent; this is where uncontrolled inflation lives.</li></ul>
+</div><div class="col"><p><b>Bitcoin — the same exercise returns empty:</b></p>
+<ul><li>Equity/liquidity beta is the only supported link — risk appetite, cycle-scale, no decade drift.</li>
+<li>Network adoption is the only defensible drift and it is reflexive (price attracts users).</li>
+<li>Inflation hedge, stock-to-flow, on-chain valuation: not supported.</li></ul>
+<div class="callout warn">Consequence: gold gets a factor CMA. Bitcoin gets a share-of-gold framework with a survival branch (slides 14–16).</div>
+</div></div><div class="foot"><span>Full translation in the one-pagers (attached)</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 3 · Gold models (1/2)</div><h1>The model, monthly: simple vs sophisticated vs the mean-reversion test</h1><div class="body"><div class="col" style="flex:1.4"><table><tr><th>Monthly — β (OLS t below)</th><th>M1 Simple</th><th>M3 Sophisticated</th><th>M6 + mean reversion</th></tr><tr><td>Δ Real 10y (per +1pp)</td><td class="num">-6.061***<br><span class="small">(-4.97)</span></td><td class="num">-8.292***<br><span class="small">(-5.81)</span></td><td class="num">-10.976***<br><span class="small">(-6.61)</span></td></tr><tr><td>DXY return (per +1%)</td><td class="num">-0.738***<br><span class="small">(-5.80)</span></td><td class="num">-0.788***<br><span class="small">(-6.33)</span></td><td class="num">-0.754***<br><span class="small">(-5.47)</span></td></tr><tr><td>Δ 10Y breakeven (pp)</td><td class="num">1.399<br><span class="small">(0.87)</span></td><td class="num">2.395<br><span class="small">(1.49)</span></td><td class="num">1.889<br><span class="small">(1.09)</span></td></tr><tr><td>Δ MOVE (bp)</td><td class="num">·<br><span class="small"></span></td><td class="num">0.070***<br><span class="small">(4.05)</span></td><td class="num">0.088***<br><span class="small">(4.53)</span></td></tr><tr><td>Δ Real10 × High-CPI</td><td class="num">·<br><span class="small"></span></td><td class="num">2.963<br><span class="small">(1.23)</span></td><td class="num">4.534*<br><span class="small">(1.75)</span></td></tr><tr><td>Gold gap vs 5y avg, lagged</td><td class="num">·<br><span class="small"></span></td><td class="num">·<br><span class="small"></span></td><td class="num">0.001<br><span class="small">(0.08)</span></td></tr><tr class='hl'><td>α annualized (%/yr)</td><td class="num"><b>10.3</b></td><td class="num"><b>9.9</b></td><td class="num"><b>9.3</b></td></tr><tr class='hl'><td>R²</td><td class="num"><b>0.268</b></td><td class="num"><b>0.313</b></td><td class="num"><b>0.356</b></td></tr><tr class='hl'><td>N (periods)</td><td class="num"><b>281</b></td><td class="num"><b>281</b></td><td class="num"><b>222</b></td></tr></table>
+<p class="small" style="margin-top:6px">LBMA PM gold log returns on Bloomberg factors, 2003→, stars = OLS 10/5/1%. Weekly &amp; quarterly in appendix (same signs, R² rises with horizon).
+Interactive: <a href="https://jhdavis789.github.io/work-doc-portal/gold-factor-regression/dashboard.html" target="_blank">jhdavis789.github.io/work-doc-portal/gold-factor-regression/dashboard.html</a> · live Excel attached.</p></div>
+<div class="col"><ul>
+<li><b>M1 needs nothing new</b> — real rates, dollar, breakevens are already in our CMAs. It carries most of the fit.</li>
+<li><b>M3 adds MOVE + the high-CPI regime interaction</b> — the honest answer to "what about uncontrolled inflation," and it is significant quarterly.</li>
+<li><b>M6 is the mean-reversion test: it fails.</b> Gap t = +0.08 monthly / +0.37 quarterly; walk-forward OOS deteriorates (16% vs 26%).</li></ul>
+<div class="callout good">Presentation: offer M1 and M3 side by side. Both defensible; the reader makes the final call.</div>
+</div></div><div class="foot"><span>Workbook: gold_models_bbg.xlsx — all formulas live off a Bloomberg re-paste</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 3 · Gold models (2/2)</div><h1>Robustness: complexity was tested and cut on evidence, not taste</h1><div class="body"><div class="col">
+<table><tr><th>Tried</th><th>Result</th></tr>
+<tr><td>Mean reversion to own 5y trend (M6)</td><td>t ≈ 0; OOS worse</td></tr>
+<tr><td>Levels / fair-value anchors</td><td>Read gold 40–50% rich since 2022; permanent sell signal</td></tr>
+<tr><td>Cointegration to money/asset aggregates</td><td>Half-lives 27–70y → under one independent episode in the sample</td></tr>
+<tr><td>Demand-weighted FX baskets</td><td>Managed currencies: weight without return variance (slide 11)</td></tr>
+<tr><td>Rolling the regime interaction</td><td>5y windows with zero high-CPI months → undefined</td></tr></table>
+</div><div class="col"><ul>
+<li>Rolling 5y betas keep sign throughout; charts in the workbook and <a href="https://jhdavis789.github.io/work-doc-portal/gold-factor-regression/dashboard.html" target="_blank">dashboard</a>.</li>
+<li>Walk-forward OOS beats a random walk at daily, weekly, monthly (DM p ≤ .016, full model). Quarterly is a wash — n is too small.</li>
+<li>What survives: three factors, the regime interaction, and an intercept that must be set by judgment (next).</li></ul>
+</div></div><div class="foot"><span>OOS table for every model and frequency: appendix (slide 19)</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 4 · The error term (1/2)</div><h1>What the factors miss is the drift — and the drift is the growth of the asset pool</h1><div class="subtl">Right: gold's level vs each anchor, both rebased to 1971, log scale — the shaded gap is what a tether would trade on</div><div class="body"><div class="col">
+<p>All factors mean-revert, so gold's +8.4%/yr drift since 1971 lands in the constant. Which aggregate does it track?</p>
+<table><tr><th>Anchor</th><th>Growth %/yr</th><th>Implied gold drift*</th></tr>
+<tr><td>M2</td><td class="num">+6.4</td><td class="num"><b>+4.8</b></td></tr><tr><td>CPI</td><td class="num">+3.8</td><td class="num"><b>+2.2</b></td></tr><tr><td>Nominal GDP</td><td class="num">+6.1</td><td class="num"><b>+4.4</b></td></tr><tr><td>Total debt (all sectors)</td><td class="num">+7.7</td><td class="num"><b>+6.0</b></td></tr><tr><td>Federal debt</td><td class="num">+8.4</td><td class="num"><b>+6.7</b></td></tr><tr><td>Total financial assets</td><td class="num">+7.8</td><td class="num"><b>+6.1</b></td></tr></table>
+<div class="eq">drift ≈ asset-pool growth − gold supply growth ≈ 7.8 − 1.7 ≈ 6%/yr</div>
+<p class="small">*anchor growth − 1.66%/yr above-ground stock growth. Part long-term nominal growth, part official-sector / de-dollarization drift — related to deglobalization, not identical to it. CPI and GDP undershoot: gold prices off the asset pool, not the price level.</p>
+</div><div class="imgbox"><img src="img/anchor_p2.png" alt="gold vs anchors"></div></div><div class="foot"><span>Deeper: https://jhdavis789.github.io/work-doc-portal/gold-portfolio-role/gold_anchor_study.pdf</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 4 · The error term (2/2)</div><h1>Gold keeps pace with the asset pool only through ~20-year cycles — drift needs a valuation overlay</h1><div class="subtl">Right: 150 years of gold vs money, credit, GDP, CPI and federal debt, 1900 = 1, log scale; shaded era = the peg</div><div class="body"><div class="col" style="flex:.8">
+<div class="kpis"><div class="kpi"><div class="v">32%→4%</div><div class="l">gold / US financial assets: 1980 peak → 2000 trough</div></div></div>
+<div class="kpis"><div class="kpi"><div class="v">22%</div><div class="l">today — the 97th percentile of 50 years</div></div></div>
+<ul style="margin-top:12px"><li>Levels-space statistics cannot rescue this: reversion half-lives of 6–70 years give ~1–4 independent episodes in 55 years. The tether cannot be estimated, only defended.</li>
+<li>150 years of data: the tracking is a post-1971 property. Under the peg, money grows past a fixed gold price; the gap releases in jumps (1933, 1971).</li></ul>
+<div class="callout warn">Treatment: intercept = growth band 4.8–6.7%/yr (anchor choice) + qualitative valuation overlay for the position in the share cycle. At the 97th percentile, the overlay argues for the low end.</div>
+</div><div class="imgbox"><img src="img/anchor_p4.png" alt="150 years"></div></div><div class="foot"><span>Deeper: https://jhdavis789.github.io/work-doc-portal/gold-portfolio-role/gold_anchor_study.pdf</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 5 · Where I'd value your feedback</div><h1>The dollar leg: a trade-weighted index is neither the marginal buyer nor the average holder — but the custom baskets mostly fail</h1><div class="body"><div class="col" style="flex:1.25"><table>
+<tr><th>Univariate R², monthly gold returns</th><th>DXY</th><th>Fed major</th><th>Buyer-wtd (flow)</th><th>Private-holder (stock)</th><th>Official-holder</th></tr>
+<tr><td>1995–2026 (common)</td><td class="num">0.178</td><td class="num best">0.208</td><td class="num">0.132</td><td class="num">0.165</td><td class="num">0.114</td></tr><tr><td>2000s</td><td class="num">0.248</td><td class="num best">0.310</td><td class="num">0.168</td><td class="num">0.226</td><td class="num">0.219</td></tr><tr><td>2010s</td><td class="num">0.099</td><td class="num best">0.121</td><td class="num">0.107</td><td class="num">0.110</td><td class="num">0.085</td></tr><tr><td>2020s</td><td class="num">0.264</td><td class="num">0.242</td><td class="num">0.220</td><td class="num best">0.269</td><td class="num">0.221</td></tr><tr><td>2022+ (CB era)</td><td class="num">0.253</td><td class="num">0.235</td><td class="num">0.284</td><td class="num best">0.304</td><td class="num">0.213</td></tr></table>
+<p class="small" style="margin-top:6px">Nine measures, 1990–2026, HAC. Shaded = best in window. Full study: <a href="https://jhdavis789.github.io/work-doc-portal/gold-usd-measure/usd_onepager.html" target="_blank">dollar-leg one-pager</a>.</p></div>
+<div class="col"><ul>
+<li><b>Fed float-weighted major index encompasses DXY</b> (t = −3.7 vs +1.0). DXY survives as the live daily stand-in.</li>
+<li><b>Demand weights fail mechanically:</b> CNY/INR carry the weight, contribute no return variance.</li>
+<li><b>The twist:</b> marginal buyer and average <i>private</i> holder are the same ~60% China+India object — best single measure since 2022 (R² .30) and the only significant addition in that window. 10y rolling test: not yet a trend (t −1.9; a 2000 spike decayed to zero).</li></ul>
+<div class="callout">Ask: one floating DM index (simple), or a regime-dependent leg that tilts to the buyer basket when official-sector flow dominates? This sets the beta we multiply against the firm's dollar path.</div>
+<div class="callout warn" style="margin-top:10px">Same question, rate leg: is the US 10y real rate dollar-centric? If interest-rate parity held, one rate would suffice — but the marginal buyers' currencies are managed, so parity fails exactly where the demand is. Untested so far: a GDP-weighted global real rate vs the US real rate. Flagged as the next study.</div>
+</div></div><div class="foot"><span>Deeper: https://jhdavis789.github.io/work-doc-portal/gold-usd-measure/usd_onepager.html</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 6 · Left-tail hedging (1/2)</div><h1>Performance in major drawdowns: protection improves with severity; the failure mode is specific</h1><div class="subtl">Chart: every S&P 500 drawdown deeper than 10% since 1970 (blue, from peak) with gold's cumulative return through the same months (gold line, same axis); each episode labeled</div><div class="body" style="flex-direction:column"><div class="kpis">
+<div class="kpi"><div class="v">4/4</div><div class="l">equity drawdowns &gt;20% since 1970 where gold finished up</div></div>
+<div class="kpi"><div class="v">+95%</div><div class="l">gold through the 2020–23 Treasury bear</div></div>
+<div class="kpi"><div class="v">+64%</div><div class="l">gold through the Volcker bond bear</div></div>
+<div class="kpi"><div class="v">2022</div><div class="l">the failure mode: rate shocks cancel the gold bid</div></div></div>
+<div class="imgrow"><img src="img/gold_dd_p1.png" alt="gold through drawdowns"></div>
+</div><div class="foot"><span>All four indices (S&P, small-cap, 60/40, Treasuries): https://jhdavis789.github.io/work-doc-portal/gold-portfolio-role/gold_during_drawdowns.pdf</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 6 · Left-tail hedging (2/2)</div><h1>Gold's 20-year real return is higher in equities' worst windows than in all windows</h1><div class="subtl">Chart: rolling 20-year annualized REAL total returns — every overlapping 20-year window since 1871, one dot per window at its end year; magenta marks the windows where US equities delivered their bottom-quartile outcome, shown across all four assets</div><div class="imgrow"><img src="img/rolling20_bottomq.png" alt="rolling 20y real returns"></div>
+<p class="small" style="margin-top:6px">Gold: +3.1%/yr median in the magenta windows vs +0.6%/yr overall. Treasuries collapse (+0.2% vs +2.2%) — the bad-equity decades were mostly inflationary, which is exactly when bonds fail too. Interactive (any horizon, nominal/real, 1871–2025): <a href="https://jhdavis789.github.io/gold-holders-dashboard/?tab=returns&horizon=20&basis=real&from=1901&to=2025" target="_blank">jhdavis789.github.io/gold-holders-dashboard/</a></p><div class="foot"><span>Deeper: https://jhdavis789.github.io/gold-holders-dashboard/?tab=returns&horizon=20&basis=real&from=1901&to=2025</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 7 · Bitcoin's inconstancy (1/3)</div><h1>No candidate driver holds: every rolling correlation wanders across zero</h1><div class="subtl">Chart: rolling correlations of monthly BTC returns with six macro candidates, 12-month (thin) and 24-month (thick) windows, 2011–2026</div><div class="imgrow"><img src="img/proof_p1.png" alt="btc rolling correlations"></div>
+<p class="small" style="margin-top:6px">Twelve candidates tested in total (also Nasdaq, VIX, Fed balance sheet, world M2, active addresses, hashrate — pages 3–4 of the <a href="https://jhdavis789.github.io/work-doc-portal/btc-driver-instability/btc_no_sustainable_drivers.pdf" target="_blank">chartpack</a>). The only survivors, equity beta and BTC's own network activity, are risk appetite and reflexivity — not forecastable fundamentals.</p><div class="foot"><span>Deeper: https://jhdavis789.github.io/work-doc-portal/btc-driver-instability/btc_no_sustainable_drivers.pdf</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 7 · Bitcoin's inconstancy (2/3)</div><h1>The control: the identical model explains gold consistently and Bitcoin barely</h1><div class="subtl">Charts: top — BTC's rolling 36m correlations with four candidates; bottom — rolling R² of the SAME five-factor macro model fit to gold (gold line) and to BTC (magenta)</div><div class="imgrow"><img src="img/btc_instability.png" alt="btc vs gold"></div>
+<p class="small" style="margin-top:6px">Subsamples (2011-14 / 15-18 / 19-21 / 22-25): gold's real-rate beta keeps its sign with t-stats -3.1 / -5.8 / -6.7 / -2.3; Bitcoin has 0 of 5 factors stable. Same data, same method — the instability is Bitcoin's, not the method's.</p><div class="foot"><span>Deeper: https://jhdavis789.github.io/work-doc-portal/btc-driver-instability/btc_no_sustainable_drivers.pdf (subsample tables, p6)</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Point 7 · Bitcoin's inconstancy (3/3)</div><h1>The approach that owns it: a share of gold's pool, one named unknown, a survival branch</h1><div class="body"><div class="col"><ul>
+<li><b>No factor CMA:</b> with nothing stable, any regression number is a sample artifact.</li>
+<li><b>The industry's own frame</b> (CoinShares, ARK, VanEck) is share-of-a-monetary-pool. We make it honest: the share is the named assumption, not a model output.</li>
+<li><b>Survival branch:</b> a 20-year horizon carries real ruin probability (protocol, regulatory, displacement), partly offset by Lindy. The CMA is a mixture, not a point.</li></ul>
+<div class="callout warn">Ask: does a scenario grid on (share of gold's pool, survival probability) work as the CMA? It is the framing the evidence supports.</div>
+</div><div class="col">
+<table><tr><th>Scenario</th><th>Share of gold pool</th><th>Implied price</th><th>20y CAGR</th></tr><tr><td>Bear</td><td class="num">3%</td><td class="num">$34,673</td><td class="num">-5.5%</td></tr><tr class=hl><td>Base</td><td class="num">15%</td><td class="num">$173,367</td><td class="num">+2.4%</td></tr><tr><td>Bull</td><td class="num">60%</td><td class="num">$693,467</td><td class="num">+9.8%</td></tr></table>
+<p class="small" style="margin-top:6px">Pool ≈ $23T (gold's investable stock); spot $107,754 at snapshot; supply 19.9M coins. Grid and sensitivities: BTC one-pager (attached) + <a href="https://jhdavis789.github.io/work-doc-portal/gold-cma-deck/index.html" target="_blank">evidence deck</a>.</p>
+</div></div><div class="foot"><span>BTC one-pager attached</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Asks & materials</div><h1>Three asks; everything one link deep</h1><div class="body"><div class="col">
+<div class="callout">1 · <b>Gold model</b>: the two-model presentation, the intercept treatment (growth band + valuation overlay), the dollar-leg call.</div>
+<div class="callout" style="margin-top:12px">2 · <b>Bitcoin approach</b>: share-of-gold + survival branch, given that no model is consistent.</div>
+<div class="callout" style="margin-top:12px">3 · <b>The two one-pagers</b> (attached) — the documents of record per asset.</div>
+<p style="margin-top:18px">30 minutes to walk any layer.</p>
+</div><div class="col"><div class="links" style="flex-direction:column;gap:9px">
+<a href="https://jhdavis789.github.io/work-doc-portal/gold-cma-deck/index.html" target="_blank">Evidence deck (10 slides, full flow)</a>
+<a href="https://jhdavis789.github.io/work-doc-portal/gold-cma-map/cma_map.html" target="_blank">Papers &amp; shops → factors → approaches (interactive)</a>
+<a href="https://jhdavis789.github.io/work-doc-portal/gold-factor-regression/dashboard.html" target="_blank">Factor model dashboard (in-sample + OOS)</a>
+<a href="https://jhdavis789.github.io/work-doc-portal/gold-portfolio-role/gold_anchor_study.pdf" target="_blank">Intercept anchor study</a>
+<a href="https://jhdavis789.github.io/work-doc-portal/gold-usd-measure/usd_onepager.html" target="_blank">Dollar-leg one-pager</a>
+<a href="https://jhdavis789.github.io/work-doc-portal/gold-portfolio-role/gold_during_drawdowns.pdf" target="_blank">Gold through every drawdown</a>
+<a href="https://jhdavis789.github.io/gold-holders-dashboard/?tab=returns&horizon=20&basis=real&from=1901&to=2025" target="_blank">Rolling-returns tool (bottom-quartile view)</a>
+<a href="https://jhdavis789.github.io/work-doc-portal/btc-driver-instability/btc_no_sustainable_drivers.pdf" target="_blank">Bitcoin driver-instability chartpack</a>
+<a href="https://jhdavis789.github.io/work-doc-portal/" target="_blank">Portal (everything)</a></div></div></div><div class="foot"><span>Attached: gold one-pager · BTC one-pager · live model workbook</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Appendix · A1</div><h1>Other frequencies: same signs, R² rises with horizon</h1><div class="body"><div class="col"><table><tr><th>Quarterly — β (OLS t below)</th><th>M1 Simple</th><th>M3 Sophisticated</th><th>M6 + mean reversion</th></tr><tr><td>Δ Real 10y (per +1pp)</td><td class="num">-9.947***<br><span class="small">(-5.91)</span></td><td class="num">-12.737***<br><span class="small">(-6.33)</span></td><td class="num">-14.638***<br><span class="small">(-6.48)</span></td></tr><tr><td>DXY return (per +1%)</td><td class="num">-0.474***<br><span class="small">(-2.87)</span></td><td class="num">-0.523***<br><span class="small">(-3.21)</span></td><td class="num">-0.495***<br><span class="small">(-2.67)</span></td></tr><tr><td>Δ 10Y breakeven (pp)</td><td class="num">1.268<br><span class="small">(0.68)</span></td><td class="num">2.686<br><span class="small">(1.40)</span></td><td class="num">2.352<br><span class="small">(1.16)</span></td></tr><tr><td>Δ MOVE (bp)</td><td class="num">·<br><span class="small"></span></td><td class="num">0.051<br><span class="small">(1.54)</span></td><td class="num">0.045<br><span class="small">(1.20)</span></td></tr><tr><td>Δ Real10 × High-CPI</td><td class="num">·<br><span class="small"></span></td><td class="num">6.808*<br><span class="small">(1.94)</span></td><td class="num">9.156**<br><span class="small">(2.36)</span></td></tr><tr><td>Gold gap vs 5y avg, lagged</td><td class="num">·<br><span class="small"></span></td><td class="num">·<br><span class="small"></span></td><td class="num">0.011<br><span class="small">(0.37)</span></td></tr><tr class='hl'><td>α annualized (%/yr)</td><td class="num"><b>10.8</b></td><td class="num"><b>10.1</b></td><td class="num"><b>7.4</b></td></tr><tr class='hl'><td>R²</td><td class="num"><b>0.415</b></td><td class="num"><b>0.452</b></td><td class="num"><b>0.505</b></td></tr><tr class='hl'><td>N (periods)</td><td class="num"><b>93</b></td><td class="num"><b>93</b></td><td class="num"><b>74</b></td></tr></table></div>
+<div class="col"><table><tr><th>Weekly — β (OLS t below)</th><th>M1 Simple</th><th>M3 Sophisticated</th><th>M6 + mean reversion</th></tr><tr><td>Δ Real 10y (per +1pp)</td><td class="num">-2.223***<br><span class="small">(-3.71)</span></td><td class="num">-4.111***<br><span class="small">(-6.19)</span></td><td class="num">-5.341***<br><span class="small">(-7.22)</span></td></tr><tr><td>DXY return (per +1%)</td><td class="num">-0.963***<br><span class="small">(-15.56)</span></td><td class="num">-0.986***<br><span class="small">(-16.17)</span></td><td class="num">-0.963***<br><span class="small">(-14.14)</span></td></tr><tr><td>Δ 10Y breakeven (pp)</td><td class="num">0.629<br><span class="small">(0.77)</span></td><td class="num">1.530*<br><span class="small">(1.87)</span></td><td class="num">1.227<br><span class="small">(1.41)</span></td></tr><tr><td>Δ MOVE (bp)</td><td class="num">·<br><span class="small"></span></td><td class="num">0.041***<br><span class="small">(5.62)</span></td><td class="num">0.049***<br><span class="small">(6.20)</span></td></tr><tr><td>Δ Real10 × High-CPI</td><td class="num">·<br><span class="small"></span></td><td class="num">5.138***<br><span class="small">(3.81)</span></td><td class="num">6.177***<br><span class="small">(4.41)</span></td></tr><tr><td>Gold gap vs 5y avg, lagged</td><td class="num">·<br><span class="small"></span></td><td class="num">·<br><span class="small"></span></td><td class="num">0.000<br><span class="small">(0.01)</span></td></tr><tr class='hl'><td>α annualized (%/yr)</td><td class="num"><b>10.3</b></td><td class="num"><b>9.7</b></td><td class="num"><b>8.9</b></td></tr><tr class='hl'><td>R²</td><td class="num"><b>0.214</b></td><td class="num"><b>0.244</b></td><td class="num"><b>0.256</b></td></tr><tr class='hl'><td>N (periods)</td><td class="num"><b>1221</b></td><td class="num"><b>1221</b></td><td class="num"><b>962</b></td></tr></table></div></div><div class="foot"><span>Monthly is the workhorse; weekly/quarterly are consistency checks</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Appendix · A2</div><h1>Walk-forward out-of-sample, every model and frequency</h1><div class="body"><div class="col"><table><tr><th>Walk-forward OOS R² (vs OOS mean)</th><th>M1 Simple</th><th>M2 (M3 ex-regime)</th><th>M4 2Y swap</th><th>M5 5Y swap</th><th>M6 Reversion</th></tr><tr><td>Monthly</td><td class="num">20.2%</td><td class="num">25.6%</td><td class="num">22.6%</td><td class="num">22.2%</td><td class="num">16.3%</td></tr><tr><td>Weekly</td><td class="num">17.3%</td><td class="num">19.3%</td><td class="num">18.0%</td><td class="num">17.5%</td><td class="num">20.2%</td></tr><tr><td>Quarterly</td><td class="num">37.5%</td><td class="num">33.4%</td><td class="num">32.7%</td><td class="num">35.1%</td><td class="num">15.7%</td></tr></table><p class='small' style='margin-top:6px'>Rolling 5-year re-fit, predict the next period; swap specs start 2004-07; M6 needs a 5y gap warmup. The regime interaction is full-sample only (a 5y window can hold zero high-CPI months), so M3 rolls as M2 and M6 rolls ex-regime.</p></div>
+<div class="col"><ul>
+<li>All models produce positive OOS R² — the factor complex is real, not fitted noise.</li>
+<li>The simple structures win or tie: M2 (three factors + MOVE) is the best monthly OOS; the mean-reversion model is the worst at every frequency.</li>
+<li>Diebold-Mariano vs a random walk (interactive dashboard): significant at daily/weekly/monthly, wash at quarterly.</li></ul></div></div><div class="foot"><span>Interactive: https://jhdavis789.github.io/work-doc-portal/gold-factor-regression/dashboard.html</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Appendix · A3</div><h1>Cross-desk check: the inflation-swap specification at daily / weekly / monthly</h1><div class="body"><div class="col"><table><tr><th>Inflation-swap spec (simple returns, bp)</th><th>Daily</th><th>Weekly</th><th>Monthly</th></tr><tr><td>Intercept (per period)</td><td class="num">0.0490</td><td class="num">0.2506</td><td class="num">1.0715</td></tr><tr><td>Real 10y (per +1bp)</td><td class="num">-0.0179</td><td class="num">-0.0229</td><td class="num">-0.0636</td></tr><tr><td>DXY (per +1%)</td><td class="num">-0.6874</td><td class="num">-0.9353</td><td class="num">-0.7196</td></tr><tr><td>2y inflation swap (per +1bp)</td><td class="num">0.0074</td><td class="num">0.0161</td><td class="num">0.0117</td></tr><tr><td>R²</td><td class="num">0.105</td><td class="num">0.219</td><td class="num">0.277</td></tr><tr><td>N</td><td class="num">5720</td><td class="num">1144</td><td class="num">263</td></tr></table></div>
+<div class="col"><ul>
+<li>Same specification another desk ran: simple returns on real-rate (bp), DXY (%), 2y inflation swap (bp), from 2004-07.</li>
+<li>Our numbers replicate theirs on identical N; remaining daily differences are a data-timing artifact — LBMA PM fix (2:30pm London) vs NY close splits a day's move across two rows. Summing the contemporaneous and one-day-lag betas recovers the NY-close values.</li>
+<li>Conclusion: the two desks see the same model. The swap leg is significant but adds little beyond breakevens at monthly horizon.</li></ul></div></div><div class="foot"><span>Full replication tab in the attached workbook</span><span>JAOD · July 2026</span></div></section><section class="slide"><div class="eyebrow">Appendix · A4</div><h1>Top-6 official gold holders over time: the West holds, the East accumulates</h1><div class="subtl">Chart: official gold holdings in thousand tonnes, quarterly since 2000, six largest current holders</div><div class="imgrow"><img src="img/top_holders.png" alt="top official holders"></div>
+<p class="small" style="margin-top:6px">US/Germany/Italy/France static for two decades; China and Russia are the accumulation. This is the structural-demand story behind the intercept drift (slide 9) and the 2022+ dollar-leg signal (slide 11). Source: WGC / IMF IFS, quarterly.</p><div class="foot"><span>Interactive holders dashboard: https://jhdavis789.github.io/gold-holders-dashboard/</span><span>JAOD · July 2026</span></div></section></div></div>
+<div class="nav" id="nav"></div>
+<script>
+(function(){
+  var W = typeof window !== "undefined" ? window : null;
+  if (!W || !W.document) return;
+  var D = W.document;
+  var slides = D.querySelectorAll(".slide");
+  var nav = D.getElementById("nav");
+  var deck = D.getElementById("deck");
+  var i = 0;
+  function show(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    for (var k = 0; k < slides.length; k++) slides[k].classList.toggle("active", k === i);
+    if (nav) nav.textContent = (i + 1) + " / " + slides.length + "  (arrow keys / click)";
+    try { if (W.history && W.history.replaceState) W.history.replaceState(null, "", "#" + (i + 1)); } catch (err) {}
+  }
+  function fit(){
+    if (!deck) return;
+    var s = Math.min(W.innerWidth / 1470, W.innerHeight / 930, 1);
+    deck.style.transform = "scale(" + s + ")";
+  }
+  if (typeof D.addEventListener !== "function") return;
+  D.addEventListener("keydown", function(e){
+    if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") show(i + 1);
+    if (e.key === "ArrowLeft" || e.key === "PageUp") show(i - 1);
+  });
+  D.addEventListener("click", function(e){
+    if (e.target.closest("a") || e.target.closest("table")) return;
+    show(i + 1);
+  });
+  if (typeof W.addEventListener === "function") W.addEventListener("resize", fit);
+  var h = parseInt(((W.location && W.location.hash) || "").slice(1), 10);
+  show(isNaN(h) ? 0 : h - 1);
+  fit();
+})();
+</script></body></html>

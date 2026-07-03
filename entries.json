@@ -1,5 +1,13 @@
 [
  {
+  "title": "Bitcoin & Gold CMAs — follow-up deck (point-by-point behind the update email)",
+  "url": "gold-btc-raj-deck/index.html",
+  "date": "2026-07-03",
+  "kind": "Deck",
+  "pinned": true,
+  "desc": "21 slides mirroring the update email's outline: lit review (with the papers/shops map), driver translation, the monthly model with the mean-reversion test, the intercept as a structural-growth identity (~6%/yr = asset growth minus gold supply growth) with the 20-year share cycle, the dollar-leg and rate-leg open questions, left-tail hedging (drawdown chart + rolling 20y real returns with equity-bottom-quartile windows highlighted), Bitcoin's driver inconstancy vs the gold control, and the share-of-gold + survival-branch approach. Appendix: other frequencies, walk-forward OOS, inflation-swap cross-check, top-6 official holders."
+ },
+ {
   "title": "Bitcoin has no sustainable drivers — rolling correlations, R², and subsample betas (chartpack)",
   "url": "btc-driver-instability/btc_no_sustainable_drivers.pdf",
   "date": "2026-07-02",
