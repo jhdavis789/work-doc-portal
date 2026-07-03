@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Dollar Leg of the Gold Model — DXY, a Fed Index, or a Custom Basket?</title>
+<style>
+:root{--ink:#1f2a37;--navy:#00294b;--accent2:#007e6c;--rule:#d8dee7;--bg:#ffffff;--soft:#f4f6f9;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#e9edf2;color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:10.0px;line-height:1.37;-webkit-font-smoothing:antialiased}
+.page{width:8.5in;min-height:11in;margin:18px auto;background:var(--bg);
+  padding:0.5in 0.58in 0.42in;box-shadow:0 2px 18px rgba(0,40,75,.12)}
+h1{font-size:17.5px;color:var(--navy);margin:0 0 2px;line-height:1.13;letter-spacing:-.01em}
+.sub{color:#5a6675;font-style:italic;font-size:9.4px;margin:0 0 10px;
+  border-bottom:2px solid var(--navy);padding-bottom:8px}
+h2{font-size:11.3px;color:var(--navy);margin:11px 0 4px;
+  border-left:3px solid var(--accent2);padding-left:7px;letter-spacing:.01em}
+p{margin:4px 0}
+ul{margin:3px 0 3px;padding-left:16px}
+li{margin:2.5px 0}
+strong{color:var(--navy)}
+code{background:var(--soft);border:1px solid var(--rule);border-radius:4px;
+  padding:5px 8px;display:block;color:var(--accent2);font-weight:600;
+  font-family:"SF Mono",Menlo,Consolas,monospace;font-size:9.6px;margin:7px 0}
+em{color:#46525f}
+.byline{margin-top:13px;padding-top:7px;border-top:1px solid var(--rule);
+  color:#8a96a3;font-size:8.6px}
+@media print{html,body{background:#fff}.page{box-shadow:none;margin:0;width:auto;min-height:auto}@page{size:letter;margin:0.5in}}
+</style></head><body><div class="page"><h1>The Dollar Leg of the Gold Model — DXY, a Fed Index, or a Custom Basket?</h1>
+<p><em>An open design question for review · the USD factor carries the most weight in every specification · July 2026</em></p>
+<h2>The question</h2>
+<p>Every gold model needs a dollar. Ours currently uses DXY — the ICE index with weights frozen since 1999 (EUR 57.6%, JPY 13.6%, GBP 11.9%, no CNY). The problem: a trade-weighted DM basket represents <strong>neither the marginal buyer/seller of gold nor the average holder</strong>. The marginal buyers of the last three years are central banks and households in China, India, Turkey and the Gulf; the average holder of the above-ground stock is skewed the same way. So should the USD leg be a custom basket weighted by who actually transacts in, or holds, gold?</p>
+<h2>What we tested</h2>
+<p>Seven USD measures against monthly LBMA gold returns, 1990–2026 (438 months, HAC t-stats): DXY; the Fed's float-weighted major-currency index (spliced to AFE at 2006); the Fed broad index (adds CNY at trade weights); a Fed EM index; a <strong>gold-buyer basket</strong> (WGC consumer-demand weights: CNY 27%, INR 23%, TRY 5.5%, …); a pure CNY/INR basket; and a <strong>central-bank-purchase basket</strong> (2010–24 net-buyer weights: RUB 30%, CNY 25%, TRY 15%).</p>
+<ul>
+<li><strong>The Fed major-currency index wins and statistically encompasses DXY.</strong> It beats DXY in every window before 2020 (R² .208 vs .178 on the common sample) and DXY adds nothing beyond it (t = +1.0, wrong sign) while the reverse rejects (t = −3.7). DXY survives as a practical daily stand-in (correlation 0.96); the cost is 2–4 points of R².</li>
+<li><strong>Demand-weighted baskets fail, and the reason is mechanical: weight ≠ information.</strong> CNY was pegged to 2005 and managed since (2010s vol 3.6%/yr vs ~9% for EUR); INR similar. A near-pegged currency contributes its weight to the basket's level but almost nothing to its returns — and returns are what a regression sees. The buyer basket's R² is .093–.148; the CB-purchase basket is pure noise (.008) because RUB/TRY move on their own crises, orthogonal to gold. No custom basket adds significantly beyond the Fed major index in any window (all |t| &lt; 2).</li>
+<li><strong>The one live caveat: the 2022+ central-bank era.</strong> In the window since 2022 the buyer basket is directionally best (R² .284 vs DXY .253) with a doubled beta — small managed-currency moves now coincide with big gold moves, consistent with the structural-demand thesis in the lit review. n = 54 months; not yet statistically separable. We re-test yearly and flag if it clears conventional significance on five years of data.</li>
+</ul>
+<h2>Why we still think the answer is a floating DM index (for now)</h2>
+<p>The custom-basket intuition is right about <em>who</em> moves gold and wrong about <em>what a regression can extract</em>. Demand geography is real information, but it lives in quantities — central-bank tonnage, Shanghai premia, import flows — not in the FX returns of managed currencies. Forcing it into the FX leg buys a worse dollar factor without capturing the demand. The academic literature lands the same way: trade-weighted indices over DXY (Tully-Lucey, Ciner), demand modeled as flows, and Erb-Harvey's result that gold-vs-any-major-currency gives nearly the same relationship, which makes the index choice second-order to begin with.</p>
+<h2>Where this could still change</h2>
+<p>A <strong>holder-weighted (stock) basket</strong> — weighted by who owns the above-ground gold rather than who bought it last year — is the one cell we had not tested; that run is in flight, same design. And if the 2022+ buyer-basket signal survives another year of data, the case for a regime-dependent dollar leg (Fed major normally, demand-tilted in official-sector regimes) gets real. Both would change the beta the CMA multiplies against the firm's dollar path, which is why we want a view on how much complexity the dollar leg should carry before we lock the spec.</p>
+<div class="byline">By JAOD &amp; (mainly) Claude · industry + academic review feeding the gold/BTC CMA · June 2026</div>
+</div></body></html>
