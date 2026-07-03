@@ -1,5 +1,13 @@
 [
  {
+  "title": "Bitcoin has no sustainable drivers — rolling correlations, R², and subsample betas (chartpack)",
+  "url": "btc-driver-instability/btc_no_sustainable_drivers.pdf",
+  "date": "2026-07-02",
+  "kind": "Chartpack",
+  "pinned": true,
+  "desc": "Six pages, monthly 2011-2026: rolling 12m/24m correlations and univariate R-sq of BTC vs twelve candidate drivers (S&P, gold, DXY, real rates, US & world M2, MOVE, Nasdaq, VIX, Fed balance sheet, active addresses, hashrate). Every exogenous driver wanders across zero at both windows; the only persistent correlates - equity beta and BTC's own network activity - are risk appetite and reflexivity, not forecastable fundamentals. Gold run through the identical battery as the control (its DXY/real-rate spine holds). Subsample beta tables 2011-14/15-18/19-21/22-25."
+ },
+ {
   "title": "The Dollar Leg of the Gold Model — DXY vs Fed indices vs custom gold-buyer baskets",
   "url": "gold-usd-measure/usd_onepager.html",
   "date": "2026-07-02",
