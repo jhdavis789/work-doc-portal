@@ -6,7 +6,11 @@ A running index of links/deliverables to review and send (newest at top), with s
 date sorting, kind/tag filters, and copy-link buttons. Add a deliverable by appending an
 object to entries.json (or use `python3 build.py --add ...`) then re-running this script.
 
-Entry schema: {title, url, date (YYYY-MM-DD), kind, desc, tags[], pinned?}
+Entry schema: {title, url, date (YYYY-MM-DD), kind, desc, tags[], pinned?,
+               downloads?: [{label, url}]}
+
+`downloads` renders one save-to-disk button per file next to Open/Copy link (the browser
+`download` attribute), for entries whose source file people want in hand (.docx, .xlsx, .pdf).
 """
 import json, sys, argparse
 from pathlib import Path
@@ -27,6 +31,7 @@ def add(args):
         "version": args.version or "",
         "tags": [t.strip() for t in (args.tags or "").split(",") if t.strip()],
         "pinned": bool(args.pinned),
+        "downloads": [dict(zip(("label", "url"), d.split("|", 1))) for d in (args.download or [])],
     })
     ENTRIES.write_text(json.dumps(items, indent=2))
     print(f"added '{args.title}' ({len(items)} entries)")
@@ -68,6 +73,7 @@ header p{margin:6px 0 0;font-size:13px;color:#c9dcec;max-width:820px}
 .actions{display:flex;flex-direction:column;gap:6px}
 .actions button{padding:6px 11px;border:1px solid var(--line);border-radius:7px;background:#fff;font-size:12px;cursor:pointer;white-space:nowrap}
 .actions a{padding:6px 11px;border:1px solid var(--line);border-radius:7px;background:#fff;font-size:12px;cursor:pointer;white-space:nowrap;text-decoration:none;color:var(--ink);text-align:center}
+.actions a.dl{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
 .empty{color:var(--mut);padding:30px;text-align:center}
 mark{background:#ffe8a3;padding:0 1px}
 </style></head>
@@ -116,11 +122,13 @@ function render(){
   if(!items.length){ listEl.innerHTML='<div class="empty">No matching items.</div>'; return; }
   listEl.innerHTML=items.map(d=>{
     const tags=(d.tags||[]).map(t=>`<span class="tag">${hl(t,q)}</span>`).join('');
+    const dls=(d.downloads||[]).map(f=>`<a class="dl" href="${esc(f.url)}" download>${esc(f.label)} ⬇</a>`).join('');
     return `<div class="item${d.pinned?' pin':''}">
       <div class="date">${esc(d.date)||'—'}${d.pinned?'<br><span class="pinlbl">PINNED</span>':''}</div>
       <div><div class="ti"><a href="${esc(d.url)}" target="_blank" rel="noopener">${hl(d.title,q)}</a>${d.kind?`<span class="kind">${esc(d.kind)}</span>`:''}${d.version?`<span class="ver">${esc(d.version)}</span>`:''}</div>
         <div class="desc">${hl(d.desc||'',q)}</div><div class="tags">${tags}</div></div>
       <div class="actions"><a href="${esc(d.url)}" target="_blank" rel="noopener">Open ↗</a>
+        ${dls}
         <button onclick="copy('${esc(d.url)}')">Copy link</button></div>
     </div>`; }).join('');
 }
@@ -144,6 +152,8 @@ def main():
     a.add_argument("--title", required=True); a.add_argument("--url", required=True)
     a.add_argument("--date", required=True); a.add_argument("--kind")
     a.add_argument("--desc"); a.add_argument("--tags"); a.add_argument("--version"); a.add_argument("--pinned", action="store_true")
+    a.add_argument("--download", action="append", metavar="LABEL|URL",
+                   help="save-to-disk button, repeatable, e.g. 'Word (.docx)|dir/file.docx'")
     args = ap.parse_args()
     if args.cmd == "add":
         add(args)
