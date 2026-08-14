@@ -171,5 +171,16 @@
         "url": "jaod-stock-talks/JAOD_Stock_Talks_2026-06_07.pdf"
       }
     ]
+  },
+  {
+    "title": "Gold & Bitcoin CMAs \u2014 full deck, 14 August 2026 build (password protected)",
+    "url": "gold-btc-cma-deck/gold_btc_cma_deck_2026-08-14.pdf",
+    "date": "2026-08-14",
+    "kind": "Deck",
+    "desc": "92 slides, current working build. The framework section states the store-of-value valuation the same way an equity CMA is stated: nominal GDP times a multiple times stability times asset share, then the same terms in returns space. Includes the re-strike section, the factor regressions, and the gold and bitcoin answer slides. The file is encrypted and asks for a password when it opens; the password is not published here.",
+    "version": "",
+    "tags": [],
+    "pinned": true,
+    "downloads": []
   }
 ]
