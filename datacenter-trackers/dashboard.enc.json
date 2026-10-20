@@ -1,0 +1,1 @@
+{"version": 1, "salt": "VWUQ5Cc5qHV6Q9LemLUjKg==", "iv": "PB+opG9+TQi14xio", "iterations": 600000, "aad": "ai-campus-archive-v1", "compression": "gzip", "cipher": "AES-256-GCM", "file": "dashboard.enc"}
