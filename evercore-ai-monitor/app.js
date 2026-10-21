@@ -37,3 +37,15 @@ $('lock').addEventListener('click', () => {
   $('gate').hidden = false;
   $('key').focus();
 });
+
+// URL fragments stay local to the browser. Consume and remove the access key
+// before requesting the encrypted payload; never persist it in browser storage.
+function unlockLinkedReport() {
+  const linkedKey = new URLSearchParams(location.hash.slice(1)).get('key');
+  if (!linkedKey) return;
+  history.replaceState(null, '', location.pathname + location.search);
+  $('key').value = linkedKey;
+  $('unlock').requestSubmit();
+}
+window.addEventListener('hashchange', unlockLinkedReport);
+unlockLinkedReport();
