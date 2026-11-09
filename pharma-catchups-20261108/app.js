@@ -1,6 +1,7 @@
 'use strict';
 const $ = id => document.getElementById(id);
 let reportUrl;
+let numbersUrl;
 const decode = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 $('unlock').addEventListener('submit', async event => {
   event.preventDefault();
@@ -16,6 +17,11 @@ $('unlock').addEventListener('submit', async event => {
     const plaintext = await crypto.subtle.decrypt({name: 'AES-GCM', iv: decode(payload.iv), additionalData: new TextEncoder().encode(payload.aad)}, key, decode(payload.ciphertext));
     reportUrl = URL.createObjectURL(new Blob([plaintext], {type: 'text/html;charset=utf-8'}));
     $('download').href = reportUrl;
+    const text = new TextDecoder().decode(plaintext);
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+    const numbers = JSON.parse(doc.getElementById('numbers-data').textContent);
+    numbersUrl = URL.createObjectURL(new Blob([numbers.csv], {type: 'text/csv;charset=utf-8'}));
+    $('numbers-download').href = numbersUrl;
     $('report').src = reportUrl;
     $('key').value = '';
     $('gate').hidden = true;
@@ -31,6 +37,9 @@ $('unlock').addEventListener('submit', async event => {
 $('lock').addEventListener('click', () => {
   $('report').removeAttribute('src');
   $('download').removeAttribute('href');
+  $('numbers-download').removeAttribute('href');
+  if (numbersUrl) URL.revokeObjectURL(numbersUrl);
+  numbersUrl = undefined;
   if (reportUrl) URL.revokeObjectURL(reportUrl);
   reportUrl = undefined;
   $('reader').hidden = true;
