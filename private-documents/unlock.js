@@ -51,12 +51,13 @@
         if (run !== generation) return;
         const card = document.createElement('article'); card.className = 'document';
         const heading = document.createElement('h2'); heading.textContent = doc.title;
-        const detail = document.createElement('p'); detail.textContent = [doc.version,doc.pages+' pages','Word document'].filter(Boolean).join(' · ');
+        const format = doc.mime === 'application/pdf' ? 'PDF' : 'Word';
+        const detail = document.createElement('p'); detail.textContent = [doc.version,doc.pages+' pages',format === 'PDF' ? 'PDF' : 'Word document'].filter(Boolean).join(' · ');
         const link = document.createElement('a'); link.className = 'download';
         const url = URL.createObjectURL(new Blob([bytes],{type:doc.mime})); urls.add(url);
         bytes.fill(0); delete doc.data;
-        link.href = url; link.download = doc.filename; link.textContent = 'Download Word';
-        link.setAttribute('aria-label','Download '+doc.title+(doc.version?' '+doc.version:'')+' as Word');
+        link.href = url; link.download = doc.filename; link.textContent = 'Download '+format;
+        link.setAttribute('aria-label','Download '+doc.title+(doc.version?' '+doc.version:'')+' as '+format);
         card.append(heading,detail,link); fragment.append(card);
       }
       if (run !== generation) return;
