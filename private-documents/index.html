@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>Private documents</title>
+<link rel="stylesheet" href="style.css">
+<script src="unlock.js" defer></script>
+</head>
+<body>
+<main>
+<a class="back" href="../">Work Doc Portal</a>
+<section id="locked" aria-labelledby="lock-title">
+<h1 id="lock-title">Private documents</h1>
+<p>Enter your call-notes password to open the document list.</p>
+<form id="unlock">
+<label for="key">Password</label>
+<input id="key" type="password" autocomplete="current-password" required>
+<button id="submit" type="submit">Unlock documents</button>
+<p id="status" role="status" aria-live="polite"></p>
+</form>
+</section>
+<section id="opened" hidden aria-labelledby="docs-title">
+<header><h1 id="docs-title" tabindex="-1">Private documents</h1><button id="lock" type="button">Lock</button></header>
+<div id="documents"></div>
+</section>
+</main>
+</body>
+</html>

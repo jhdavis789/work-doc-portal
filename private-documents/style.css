@@ -1,0 +1,23 @@
+:root{color-scheme:light;--navy:#00294b;--blue:#005f9e;--ink:#243240;--muted:#5b6b7a;--line:#d6dfe7}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:#f4f6f8;color:var(--ink);font:17px/1.55 system-ui,-apple-system,sans-serif}
+main{max-width:760px;margin:9vh auto;padding:28px}
+.back{color:var(--blue);font-size:14px;text-underline-offset:3px}
+h1{color:var(--navy);font-size:32px;line-height:1.2;margin:28px 0 16px}
+p{color:var(--muted)}
+form{max-width:440px}
+label{display:block;margin-top:28px;margin-bottom:8px;font-weight:600}
+input{width:100%;padding:12px;border:1px solid #8d9dab;border-radius:6px;font:inherit;background:white}
+button,.download{display:inline-block;padding:11px 18px;border:0;border-radius:6px;background:var(--blue);color:white;font:inherit;cursor:pointer;text-decoration:none}
+button:disabled{opacity:.65;cursor:wait}
+#submit{margin-top:16px}
+#status{min-height:52px;font-size:15px}
+header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:28px 0}
+header h1{margin:0}
+header button{background:white;color:var(--blue);border:1px solid var(--line)}
+.document{padding:22px;margin:16px 0;background:white;border:1px solid var(--line);border-radius:10px}
+.document h2{font-size:22px;color:var(--navy);margin:0 0 6px}
+.document p{margin:0 0 18px;font-size:15px}
+:focus-visible{outline:3px solid #cc8c24;outline-offset:4px}
+@media(max-width:480px){main{margin:4vh auto;padding:22px}h1{font-size:28px}.document{padding:18px}header{align-items:flex-start}}
