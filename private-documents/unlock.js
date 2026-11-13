@@ -44,7 +44,10 @@
       new Uint8Array(raw).fill(0);
       if (data.version !== 1 || !Array.isArray(data.documents)) throw Error('Invalid index');
       const fragment = document.createDocumentFragment();
-      for (const doc of data.documents) {
+      const documents = data.documents.map((doc, index) => ({doc, index,
+        time: Date.parse(doc.updated_at || doc.added_at || '') || 0}));
+      documents.sort((a, b) => b.time - a.time || b.index - a.index);
+      for (const {doc} of documents) {
         const bytes = decode(doc.data);
         const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)), b => b.toString(16).padStart(2,'0')).join('');
         if (digest !== doc.sha256) throw Error('Document integrity check failed');
