@@ -54,8 +54,8 @@
         if (run !== generation) return;
         const card = document.createElement('article'); card.className = 'document';
         const heading = document.createElement('h2'); heading.textContent = doc.title;
-        const format = doc.mime === 'application/pdf' ? 'PDF' : 'Word';
-        const detail = document.createElement('p'); detail.textContent = [doc.version,doc.pages+' pages',format === 'PDF' ? 'PDF' : 'Word document'].filter(Boolean).join(' · ');
+        const format = doc.mime === 'application/pdf' ? 'PDF' : doc.mime === 'text/html' ? 'HTML' : 'Word';
+        const detail = document.createElement('p'); detail.textContent = [doc.version,doc.pages ? doc.pages+' pages' : null,format === 'HTML' ? 'Interactive HTML' : format === 'PDF' ? 'PDF' : 'Word document'].filter(Boolean).join(' · ');
         const link = document.createElement('a'); link.className = 'download';
         const url = URL.createObjectURL(new Blob([bytes],{type:doc.mime})); urls.add(url);
         bytes.fill(0); delete doc.data;
