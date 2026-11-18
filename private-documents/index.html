@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'sha256-hTZ3lFajX69sqbQ/HZsCpefr8w+8hw7H7w7BnbIgWE8=' 'sha256-vfZvK0/ucLrtPoe1JiAsOWIYMbQexPlB+NEkS9cykc0='; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <title>Private documents</title>
 <link rel="stylesheet" href="style.css">
 <script src="unlock.js" defer></script>
@@ -26,6 +26,15 @@
 <section id="opened" hidden aria-labelledby="docs-title">
 <header><h1 id="docs-title" tabindex="-1">Private documents</h1><button id="lock" type="button">Lock</button></header>
 <div id="documents"></div>
+<section id="dashboard-view" hidden aria-labelledby="dashboard-title">
+<div class="viewer-toolbar">
+<button id="back-to-documents" type="button">Back to documents</button>
+<h2 id="dashboard-title" tabindex="-1"></h2>
+<a id="dashboard-csv" class="download">Download numbers (CSV)</a>
+</div>
+<iframe id="dashboard-frame" sandbox="" title="Call dashboard"></iframe>
+</section>
+<p id="view-status" role="status" hidden></p>
 </section>
 </main>
 </body>

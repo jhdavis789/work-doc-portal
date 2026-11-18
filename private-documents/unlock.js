@@ -5,7 +5,57 @@
   const encode = s => new TextEncoder().encode(s);
   const urls = new Set();
   let generation = 0;
+  let csvUrl;
+  let returnFocus;
+  function closeDashboard(focus = true) {
+    $('dashboard-frame').removeAttribute('srcdoc');
+    $('dashboard-title').textContent = '';
+    $('dashboard-csv').removeAttribute('href');
+    $('dashboard-csv').removeAttribute('download');
+    $('dashboard-view').hidden = true;
+    $('documents').hidden = false;
+    $('documents').closest('main').classList.remove('reading-dashboard');
+    if (csvUrl) URL.revokeObjectURL(csvUrl);
+    csvUrl = undefined;
+    if (focus) returnFocus?.focus();
+    returnFocus = undefined;
+  }
+  async function openDashboard(blob, doc, button, run) {
+    button.disabled = true;
+    $('view-status').hidden = true;
+    try {
+      const text = await blob.text();
+      if (run !== generation) return;
+      const report = new DOMParser().parseFromString(text, 'text/html');
+      const data = report.getElementById('numbers-data');
+      const {csv} = JSON.parse(data.textContent);
+      data.remove();
+      for (const anchor of report.querySelectorAll('a[href^="#"]')) {
+        anchor.setAttribute('href', 'about:srcdoc' + anchor.getAttribute('href'));
+      }
+      closeDashboard(false);
+      returnFocus = button;
+      csvUrl = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
+      $('dashboard-csv').href = csvUrl;
+      $('dashboard-csv').download = doc.numbers_filename;
+      $('dashboard-title').textContent = doc.title;
+      $('dashboard-frame').srcdoc = '<!doctype html>' + report.documentElement.outerHTML;
+      $('documents').hidden = true;
+      $('documents').closest('main').classList.add('reading-dashboard');
+      $('dashboard-view').hidden = false;
+      $('dashboard-title').focus();
+    } catch {
+      if (run !== generation) return;
+      closeDashboard(false);
+      $('view-status').textContent = 'The dashboard could not be opened.';
+      $('view-status').hidden = false;
+    } finally {
+      button.disabled = false;
+    }
+  }
   const clearDocuments = () => {
+    closeDashboard(false);
+    $('view-status').hidden = true;
     for (const url of urls) URL.revokeObjectURL(url);
     urls.clear();
     $('documents').replaceChildren();
@@ -57,11 +107,19 @@
         const format = doc.mime === 'application/pdf' ? 'PDF' : doc.mime === 'text/html' ? 'HTML' : 'Word';
         const detail = document.createElement('p'); detail.textContent = [doc.version,doc.pages ? doc.pages+' pages' : null,format === 'HTML' ? 'Interactive HTML' : format === 'PDF' ? 'PDF' : 'Word document'].filter(Boolean).join(' · ');
         const link = document.createElement('a'); link.className = 'download';
-        const url = URL.createObjectURL(new Blob([bytes],{type:doc.mime})); urls.add(url);
+        const blob = new Blob([bytes], {type:doc.mime});
+        const url = URL.createObjectURL(blob); urls.add(url);
         bytes.fill(0); delete doc.data;
         link.href = url; link.download = doc.filename; link.textContent = 'Download '+format;
         link.setAttribute('aria-label','Download '+doc.title+(doc.version?' '+doc.version:'')+' as '+format);
-        card.append(heading,detail,link); fragment.append(card);
+        card.append(heading, detail);
+        if (doc.viewer === 'call-dashboard' && doc.mime === 'text/html') {
+          const view = document.createElement('button'); view.type = 'button';
+          view.className = 'view-dashboard'; view.textContent = 'View dashboard';
+          view.addEventListener('click', () => openDashboard(blob, doc, view, run));
+          card.append(view);
+        }
+        card.append(link); fragment.append(card);
       }
       if (run !== generation) return;
       $('documents').replaceChildren(fragment);
@@ -77,6 +135,7 @@
       if (run === generation) { $('key').value = ''; $('submit').disabled = false; }
     }
   });
+  $('back-to-documents').addEventListener('click', () => closeDashboard());
   $('lock').addEventListener('click',()=>lock());
   addEventListener('pagehide',()=>lock(false));
   addEventListener('pageshow',event=>{if(event.persisted)lock(false);});

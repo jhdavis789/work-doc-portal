@@ -21,3 +21,12 @@ header button{background:white;color:var(--blue);border:1px solid var(--line)}
 .document p{margin:0 0 18px;font-size:15px}
 :focus-visible{outline:3px solid #cc8c24;outline-offset:4px}
 @media(max-width:480px){main{margin:4vh auto;padding:22px}h1{font-size:28px}.document{padding:18px}header{align-items:flex-start}}
+
+.view-dashboard{margin-right:10px;margin-bottom:8px}
+.reading-dashboard{max-width:1240px;margin:1vh auto}
+.reading-dashboard header{margin:16px 0}
+.viewer-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.viewer-toolbar h2{font-size:17px;color:var(--navy);flex:1 1 200px;margin:0}
+.viewer-toolbar button,.viewer-toolbar .download{font-size:14px;padding:7px 12px}
+#dashboard-frame{display:block;width:100%;height:calc(100dvh - 180px);min-height:320px;border:1px solid var(--line);border-radius:10px;background:white}
+@media(max-width:480px){.reading-dashboard{padding:12px}#dashboard-frame{height:calc(100dvh - 220px)}}
