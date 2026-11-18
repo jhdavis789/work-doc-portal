@@ -19,10 +19,17 @@ $('unlock').addEventListener('submit', async event => {
     $('download').href = reportUrl;
     const text = new TextDecoder().decode(plaintext);
     const doc = new DOMParser().parseFromString(text, 'text/html');
-    const numbers = JSON.parse(doc.getElementById('numbers-data').textContent);
+    const numbersData = doc.getElementById('numbers-data');
+    const numbers = JSON.parse(numbersData.textContent);
+    numbersData.remove();
     numbersUrl = URL.createObjectURL(new Blob([numbers.csv], {type: 'text/csv;charset=utf-8'}));
     $('numbers-download').href = numbersUrl;
-    $('report').src = reportUrl;
+    // Keep the viewer sandboxed. Explicit srcdoc fragments stay in the iframe
+    // rather than resolving against the portal URL or navigating to a blob.
+    for (const anchor of doc.querySelectorAll('a[href^="#"]')) {
+      anchor.setAttribute('href', 'about:srcdoc' + anchor.getAttribute('href'));
+    }
+    $('report').srcdoc = '<!doctype html>' + doc.documentElement.outerHTML;
     $('key').value = '';
     $('gate').hidden = true;
     $('reader').hidden = false;
@@ -35,7 +42,7 @@ $('unlock').addEventListener('submit', async event => {
   }
 });
 $('lock').addEventListener('click', () => {
-  $('report').removeAttribute('src');
+  $('report').removeAttribute('srcdoc');
   $('download').removeAttribute('href');
   $('numbers-download').removeAttribute('href');
   if (numbersUrl) URL.revokeObjectURL(numbersUrl);
