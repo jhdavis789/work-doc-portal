@@ -3,6 +3,11 @@
   const $ = id => document.getElementById(id);
   const decode = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
   const encode = s => new TextEncoder().encode(s);
+  const documentFormats = new Map([
+    ['application/pdf', ['PDF', 'PDF']],
+    ['text/html', ['HTML', 'Interactive HTML']],
+    ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', ['Excel', 'Excel workbook']],
+  ]);
   const urls = new Set();
   let generation = 0;
   let csvUrl;
@@ -104,8 +109,8 @@
         if (run !== generation) return;
         const card = document.createElement('article'); card.className = 'document';
         const heading = document.createElement('h2'); heading.textContent = doc.title;
-        const format = doc.mime === 'application/pdf' ? 'PDF' : doc.mime === 'text/html' ? 'HTML' : 'Word';
-        const detail = document.createElement('p'); detail.textContent = [doc.version,doc.pages ? doc.pages+' pages' : null,format === 'HTML' ? 'Interactive HTML' : format === 'PDF' ? 'PDF' : 'Word document'].filter(Boolean).join(' · ');
+        const [format, formatLabel] = documentFormats.get(doc.mime) ?? ['Word', 'Word document'];
+        const detail = document.createElement('p'); detail.textContent = [doc.version,doc.pages ? doc.pages+' pages' : null,formatLabel].filter(Boolean).join(' · ');
         const link = document.createElement('a'); link.className = 'download';
         const blob = new Blob([bytes], {type:doc.mime});
         const url = URL.createObjectURL(blob); urls.add(url);
